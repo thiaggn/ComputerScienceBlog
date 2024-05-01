@@ -1,0 +1,69 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
+
+@font-face {
+ font-family: GIcons;
+ font-style: normal;
+ font-weight: 100 700;
+ src: url(https://fonts.gstatic.com/s/materialsymbolsoutlined/v179/kJEhBvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oFsI.woff2) format('woff2');
+}
+
+.gicon {
+ font-family: GIcons, sans-serif;
+ font-weight: normal;
+ font-style: normal;
+ font-size: 24px;
+ line-height: 1;
+ letter-spacing: normal;
+ text-transform: none;
+ display: inline-block;
+ white-space: nowrap;
+ word-wrap: normal;
+ direction: ltr;
+ -webkit-font-feature-settings: 'liga';
+ -webkit-font-smoothing: antialiased;
+ transition: font-variation-settings 0.3s;
+}
+
+
+:root {
+ font-size: 10px;
+ font-family: Roboto, sans-serif;
+ --mobile-width: 420px;
+}
+
+* {
+ margin: 0;
+ padding: 0;
+ box-sizing: border-box;
+ -webkit-tap-highlight-color: transparent;
+}
+
+ul {
+ list-style: none;
+}
+
+body {
+ height: 100vh;
+ width: 100%;
+}
+
+$default_theme: (
+        g0: #f0f3e8,
+        g1: #D9F1C1,
+        g2: #B1D788,
+        b1: #1D240D,
+        b2: #404231,
+        b3: #646D50,
+        b4: #BAC3A6,
+        b5: #D5DEC1,
+        b6: #e8e8e8,
+        a1: #BBEBEB,
+        a2: #A3D3D3,
+);
+
+
+.default-theme {
+ @each $key, $value in $default_theme {
+  --#{$key}: #{$value};
+ }
+}

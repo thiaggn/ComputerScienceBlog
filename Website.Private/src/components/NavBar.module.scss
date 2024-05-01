@@ -1,0 +1,166 @@
+.navbar {
+  display: flex;
+  flex-direction: column;
+  gap: 56px;
+
+  width: 56px;
+  height: 100%;
+  padding-top: 32px;
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: var(--b2);
+
+  > .topWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+
+    .options, .compose {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      width: 56px;
+      height: 56px;
+      border-radius: 16px;
+      transition: 200ms;
+      user-select: none;
+      cursor: pointer;
+    }
+
+    .compose {
+      background-color: var(--a1);
+
+      &:hover {
+        background-color: var(--a2);
+      }
+    }
+  }
+
+  > .bottomWrapper {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+
+    > .button {
+      height: 56px;
+      width: 56px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+      align-items: center;
+      user-select: none;
+      cursor: pointer;
+
+      &:hover {
+        > .pill {
+          > .hoverable {
+            background-color: var(--b6);
+            width: 100%;
+          }
+        }
+      }
+
+      &.pressed {
+        > .pill {
+          > .active {
+            background-color: var(--g1);
+            width: 100%;
+          }
+
+        }
+
+        > .label {
+          font-weight: bold;
+        }
+
+        &:hover {
+          > .pill {
+            > .active {
+              background-color: var(--g1);
+              filter: brightness(0.9);
+            }
+          }
+        }
+      }
+
+
+      > .pill {
+        display: flex;
+        flex-shrink: 0;
+        align-items: center;
+        justify-content: center;
+        width: 100%;
+        height: 32px;
+        position: relative;
+
+        > .icon {
+          z-index: 3;
+        }
+
+        > .hoverable, > .active {
+          z-index: 2;
+          position: absolute;
+          top: 0;
+          border-radius: 16px;
+          height: 100%;
+          transition: 300ms;
+          width: 0;
+        }
+      }
+
+      > .label {
+        height: 100%;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+      }
+    }
+  }
+}
+
+@media screen and (max-width: 520px) {
+  .navbar {
+    padding: 0;
+    height: 100%;
+    width: 100%;
+    flex-direction: row;
+    font-size: 1.4rem;
+
+    > .topWrapper {
+      display: none;
+    }
+
+    > .bottomWrapper {
+      flex-direction: row;
+      justify-content: space-around;
+      align-items: center;
+      width: 100%;
+      border-top: 1px solid var(--b5);
+
+      > :last-child {
+        display: none;
+      }
+
+      > .button {
+        width: 64px;
+
+        .hoverable {
+          display: none;
+        }
+
+        &.pressed {
+
+          &:hover {
+            > .pill {
+              > .active {
+                background-color: var(--g1);
+                filter: none;
+                width: 100%;
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}
