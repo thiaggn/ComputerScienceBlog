@@ -12,7 +12,7 @@ import SettingsLayout from "./layouts/SettingsLayout.tsx";
 const appRouter = createBrowserRouter(
     createRoutesFromElements(
         <Route element={<App/>}>
-            <Route path="blog" element={<DashboardLayout/>}/>
+            <Route  path="blog" element={<DashboardLayout/>}/>
             <Route path="blog/posts" element={<PostEntriesLayout/>}/>
             <Route path="blog/comments" element={<CommentsLayout/>}/>
             <Route path="blog/people" element={<PeopleLayout/>}/>

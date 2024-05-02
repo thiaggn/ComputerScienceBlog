@@ -1,35 +1,27 @@
 @import "DefaultTheme";
 
 .dashboard {
+  position: relative;
   display: flex;
   flex-direction: column;
   gap: 32px;
 
   > .main {
-    padding-bottom: 64px;
     display: grid;
-    grid-template-areas: 'columnA columnB';
     grid-template-columns: 400px 1fr;
     gap: 32px;
-    width: 100%;
 
-    @media screen and (max-width: 520px) {
-      grid-template-areas: 'columnB' 'columnA';
-      grid-template-columns: 1fr;
+    > .columnA, > .columnB {
+      @include gap(32px);
     }
 
     > .columnA {
-      grid-area: columnA;
-      display: flex;
-      flex-direction: column;
-      gap: 32px;
 
       > .recentWork {
         @include gap(8px);
 
-
         .list {
-          @include gap(8px);
+          @include gap(16px);
 
           .item {
             @include box(var(--g1), 16px, 12px, null, var(--g2));
@@ -117,12 +109,33 @@
     }
 
     > .columnB {
-      grid-area: columnB;
-
       > .blogStatistics {
         grid-area: blogStatistics;
       }
     }
+  }
+}
 
+@media screen and (max-width: 520px) {
+  .dashboard {
+    gap: 0;
+
+    > .mainHeader {
+      padding-bottom: 16px;
+      margin-bottom: 16px;
+    }
+
+   > .main {
+     display: flex;
+     flex-direction: column;
+
+     > .columnB {
+       order: 1;
+     }
+
+     > .columnA {
+       order: 2;
+     }
+   }
   }
 }

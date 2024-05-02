@@ -1,45 +1,42 @@
 .viewHeader {
+  width: 100%;
+  top: 0;
+  background-color: var(--g0);
+  transition: 400ms;
+  color: var(--b2);
+  border-bottom: 1px solid transparent;
+
+  > .main {
+    height: 142px;
     display: flex;
-    flex-direction: column;
     justify-content: flex-end;
-    background: var(--g0);
-    width: 100%;
-    height: 150px;
-    padding-bottom: 16px;
-    position: sticky;
-    top: 0;
-    border-bottom: 1px solid var(--b5);
-    color: var(--b2);
+    flex-direction: column;
+    transition: 400ms;
 
-
-    > .main {
-        > .title {
-            font-family: "Cabinet Grotesk", serif;
-            font-size: 3.6rem;
-        }
-
-        > .optional {
-            font-size: 1.3rem;
-        }
+    > .title {
+      font-size: 3.6rem;
+      font-family: UIFont, sans-serif;
+      font-weight: 400;
+      transition: 400ms;
     }
+
+    > .optional {
+      height: 1.3rem;
+    }
+  }
 }
 
 @media screen and (max-width: 520px) {
-    .viewHeader {
-        display: flex;
-        justify-content: center;
-        height: 80px;
-        border-bottom: 1px solid var(--b5);
-        padding: 0 32px 0 32px;
-        position: fixed;
-        top: 0;
-        left: 0;
+  .viewHeader {
+    position: sticky;
+    border-color: var(--b5);
 
-        > .main {
+    > .main {
+      height: 72px;
 
-            > .title {
-                font-size: 2rem;
-            }
-        }
+      > .title {
+        font-size: 2.2rem;
+      }
     }
+  }
 }

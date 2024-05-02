@@ -7,14 +7,12 @@ import GIcon from "../components/GIcon.tsx";
 import {RecentCommentData} from "../lib/Types.ts";
 export default function DashboardLayout() {
 
-
-
-    return <div className={s.dashboard}>
-        <ViewHeader title={getGreeting()}>
+    return <div className={s.dashboard} >
+        <ViewHeader className={s.mainHeader} title={"Oi, Thiago"}>
             <span>{getFormattedDate()}</span>
         </ViewHeader>
 
-        <div className={s.main} onScroll={(e) => {console.log(e)}}>
+        <div className={s.main}>
             <div className={s.columnA}>
                 <div className={s.recentWork}>
                     <ContainerHeader  className={s.header} title="Visto por último"/>
