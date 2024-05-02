@@ -1,0 +1,50 @@
+.containerMenu {
+  height: 24px;
+  display: flex;
+  gap: 16px;
+
+  > .item {
+    cursor: pointer;
+    user-select: none;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+
+    position: relative;
+    height: 100%;
+
+    > .label {
+      color: var(--lightGray);
+      font-family: Inter, Roboto, sans-serif;
+      font-size: 1.2rem;
+      font-weight: 500;
+    }
+
+    > .stripWrapper {
+      width: 100%;
+      height: 4px;
+
+      > .strip {
+        margin: auto;
+        height: 100%;
+        width: 0;
+        background-color: transparent;
+        border-radius: 16px;
+        transition: 400ms;
+      }
+    }
+
+    &.selected {
+      > .label {
+        color: var(--b0);
+      }
+
+      .strip {
+        background-color: var(--shadowDarker);
+        width: 80%;
+      }
+    }
+  }
+
+
+}

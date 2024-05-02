@@ -1,26 +1,33 @@
 .viewHeader {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
   width: 100%;
   top: 0;
-  background-color: var(--g0);
+
+  z-index: 3;
   transition: 400ms;
   color: var(--b2);
   border-bottom: 1px solid transparent;
+  height: 120px;
 
   > .main {
-    height: 142px;
     display: flex;
-    justify-content: flex-end;
+
     flex-direction: column;
     transition: 400ms;
 
     > .title {
+      -webkit-tap-highlight-color: transparent;
+      user-select: none;
+
       font-size: 3.6rem;
-      font-family: UIFont, sans-serif;
+      font-family: UIFont, Roboto, sans-serif;
       font-weight: 400;
       transition: 400ms;
     }
 
-    > .optional {
+    > .subtitle {
       height: 1.3rem;
     }
   }
@@ -30,12 +37,17 @@
   .viewHeader {
     position: sticky;
     border-color: var(--b5);
+    height: 90px;
+    align-items: center;
 
     > .main {
-      height: 72px;
 
       > .title {
         font-size: 2.2rem;
+      }
+
+      > .subtitle {
+        height: fit-content;
       }
     }
   }

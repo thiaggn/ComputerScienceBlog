@@ -13,3 +13,16 @@ export const navButtons = [
     {label: "Pessoas", icon: "person", key: NavOption.People},
     {label: "Ajustes", icon: "settings", key: NavOption.Settings}
 ]
+
+export enum PostVisibilityOption {
+    Published,
+    Draft,
+    Trash,
+}
+
+export const postVisibilityOptions = [
+    {label: "Público", key: PostVisibilityOption.Published},
+    {label: "Rascunho", key: PostVisibilityOption.Draft},
+    {label: "Lixeira", key: PostVisibilityOption.Trash},
+]
+

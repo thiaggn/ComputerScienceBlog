@@ -71,3 +71,11 @@
     background: $handleHover;
   }
 }
+
+@mixin blueButton() {
+  @include box(var(--b1), var(--padding-size), 0);
+  font-weight: 600;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: 200ms;
+}

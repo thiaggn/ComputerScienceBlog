@@ -8,9 +8,14 @@ import {RecentCommentData} from "../lib/Types.ts";
 export default function DashboardLayout() {
 
     return <div className={s.dashboard} >
-        <ViewHeader className={s.mainHeader} title={"Oi, Thiago"}>
-            <span>{getFormattedDate()}</span>
-        </ViewHeader>
+        <ViewHeader
+            className={s.mainHeader}
+            title={"Oi, Thiago"}
+            subtitle={getFormattedDate()}
+            lateral={<div className={s.headerButton}>
+                <GIcon>more_vert</GIcon>
+            </div>}
+        />
 
         <div className={s.main}>
             <div className={s.columnA}>

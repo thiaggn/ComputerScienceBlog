@@ -121,8 +121,14 @@
     gap: 0;
 
     > .mainHeader {
-      padding-bottom: 16px;
       margin-bottom: 16px;
+
+      > .headerButton {
+
+        * {
+          font-size: 3rem !important;
+        }
+      }
     }
 
    > .main {

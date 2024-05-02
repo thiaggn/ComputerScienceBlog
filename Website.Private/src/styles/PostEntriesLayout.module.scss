@@ -1,52 +1,120 @@
+@import "DefaultTheme";
+
 .postEntries {
   width: 100%;
 
+  .buttonList {
+    display: flex;
+    gap: 8px;
+
+    > .button {
+      user-select: none;
+      -webkit-tap-highlight-color: transparent;
+
+      padding: 8px;
+      aspect-ratio: 1 / 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      //background: var(--g1);
+      border-radius: 100%;
+
+      > * {
+        user-select: none;
+        -webkit-tap-highlight-color: transparent;
+        font-size: 3rem !important;
+      }
+    }
+  }
+
   > .body {
+    margin-top: 8px;
     display: grid;
     grid-template-columns: 3fr minmax(300px, 1fr);
     grid-template-rows: 1fr;
     gap: 32px;
-
     width: 100%;
     height: 100%;
 
     > .main {
-      > .searchBox {
+      @include gap(16px);
+
+      > .wrapper {
         display: flex;
-        align-items: center;
-        padding: 0 16px;
+        flex-direction: column;
         gap: 8px;
-        border-radius: 16px;
-        height: 56px;
-        width: 100%;
-        border: 1px solid var(--b5);
-        color: var(--b3);
+      }
 
-        > .input {
-          height: 100%;
-          width: 100%;
-          background: unset;
-          border: unset;
-          font-family: inherit;
-          font-size: 1.3rem;
+      > .postEntriesList {
+        display: grid;
+        grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+        gap: 16px;
 
-          &:focus {
-            outline: none;
+        > .postEntryItem {
+          @include box(var(--g1), 16px, 8px, null, var(--g2));
+          color: var(--b21);
+          flex-direction: column;
+
+          .title {
+            font-weight: bold;
           }
+
+          > .postIntrisic {
+            display: flex;
+            flex-direction: column;
+            gap: 4px;
+
+            .tags {
+              display: flex;
+              gap: 8px;
+            }
+
+            .stats {
+              display: flex;
+              align-items: center;
+              gap: 16px;
+              margin-top: 4px;
+            }
+          }
+
         }
       }
     }
 
-     > .aside {
+    > .aside {
 
-     }
+    }
+
+    .searchBox {
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      gap: 8px;
+      border-radius: var(--boxRadius);
+      height: 56px;
+      width: 100%;
+      border: 1px solid var(--b5);
+      color: var(--b3);
+
+      > .input {
+        height: 100%;
+        width: 100%;
+        background: unset;
+        border: unset;
+        font-family: inherit;
+        font-size: 1.3rem;
+
+        &:focus {
+          outline: none;
+        }
+      }
+    }
   }
 }
 
 @media screen and (max-width: 520px) {
   .postEntries {
     > .mainHeader {
-      padding-bottom: 16px;
       margin-bottom: 16px;
     }
 
@@ -57,6 +125,10 @@
 
       > .main {
         order: 2;
+
+        > .searchBox {
+          display: none;
+        }
       }
     }
   }
