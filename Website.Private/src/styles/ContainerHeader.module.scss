@@ -1,0 +1,21 @@
+.containerHeader {
+  height: 22px;
+  display: flex;
+  align-items: center;
+  user-select: none;
+  color: var(--b2);
+
+  > .static {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    > .icon {
+
+    }
+
+    > .title {
+      font-weight: 600;
+    }
+  }
+}

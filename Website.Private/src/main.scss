@@ -4,6 +4,7 @@
  font-family: GIcons;
  font-style: normal;
  font-weight: 100 700;
+ font-display: block;
  src: url(https://fonts.gstatic.com/s/materialsymbolsoutlined/v179/kJEhBvYX7BgnkSrUwT8OhrdQw4oELdPIeeII9v6oFsI.woff2) format('woff2');
 }
 
@@ -29,7 +30,9 @@
  font-size: 10px;
  font-family: Roboto, sans-serif;
  --mobile-width: 420px;
+ color: var(--b1);
 }
+
 
 * {
  margin: 0;
@@ -43,14 +46,14 @@ ul {
 }
 
 body {
- height: 100vh;
  width: 100%;
 }
 
 $default_theme: (
         g0: #f0f3e8,
-        g1: #D9F1C1,
+        g1: #d9e7cb,
         g2: #B1D788,
+        g3: darken(#B1D788, 20%),
         b1: #1D240D,
         b2: #404231,
         b3: #646D50,
@@ -59,6 +62,7 @@ $default_theme: (
         b6: #e8e8e8,
         a1: #BBEBEB,
         a2: #A3D3D3,
+        boxRadius: 16px
 );
 
 

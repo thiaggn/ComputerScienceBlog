@@ -1,0 +1,73 @@
+@mixin boxOutlined($clr, $pad, $gap, $clrhover: null, $bghover: null) {
+  @include box(transparent, $pad, $gap, $bghover, $clrhover);
+  border-color: $clr;
+  transition:  200ms;
+
+  &:hover {
+    @if($clrhover) {
+      border-color: $clrhover;
+    }
+
+    @if($bghover) {
+      background-color: $bghover;
+    }
+  }
+}
+
+
+
+@mixin box($bg, $pad, $gap, $bghover: null, $clrhover: null) {
+  background-color: $bg;
+  padding: $pad;
+  border-radius: var(--boxRadius);
+  user-select: none;
+  transition: 200ms;
+  border: 1px solid transparent;
+  display: flex;
+  gap: $gap;
+
+  &:hover {
+    background-color: $bghover;
+
+    @if($clrhover) {
+      border-color: $clrhover;
+    }
+  }
+}
+
+@mixin gap($gap) {
+  display: flex;
+  flex-direction: column;
+  gap: $gap;
+}
+
+@mixin hiddenScrollbar() {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+
+  &::-webkit-scrollbar {
+    display: none;
+  }
+}
+
+@mixin scrollbar($width, $bg, $handle, $handleHover) {
+  /* width */
+  &::-webkit-scrollbar {
+    width: $width;
+  }
+
+  /* Track */
+  &::-webkit-scrollbar-track {
+    background: $bg;
+  }
+
+  /* Handle */
+  &::-webkit-scrollbar-thumb {
+    background: $handle;
+  }
+
+  /* Handle on hover */
+  &::-webkit-scrollbar-thumb:hover {
+    background: $handleHover;
+  }
+}

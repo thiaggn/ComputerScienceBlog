@@ -1,0 +1,128 @@
+@import "DefaultTheme";
+
+.dashboard {
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+
+  > .main {
+    padding-bottom: 64px;
+    display: grid;
+    grid-template-areas: 'columnA columnB';
+    grid-template-columns: 400px 1fr;
+    gap: 32px;
+    width: 100%;
+
+    @media screen and (max-width: 520px) {
+      grid-template-areas: 'columnB' 'columnA';
+      grid-template-columns: 1fr;
+    }
+
+    > .columnA {
+      grid-area: columnA;
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+
+      > .recentWork {
+        @include gap(8px);
+
+
+        .list {
+          @include gap(8px);
+
+          .item {
+            @include box(var(--g1), 16px, 12px, null, var(--g2));
+            color: var(--b2);
+            font-weight: 400;
+
+            .icon {
+              font-size: 22px !important;
+            }
+
+            .title {
+              display: flex;
+              align-items: center;
+            }
+          }
+        }
+      }
+
+      > .recentComments {
+        @include gap(8px);
+        grid-area: recentComments;
+        width: 100%;
+
+        > .list {
+          @include gap(8px);
+
+          > .item {
+            @include boxOutlined(var(--b5), 16px, 8px);
+
+            @media screen and (max-width: 520px) {
+              @include boxOutlined(transparent, 0, 8pxp);
+              border-radius: 0;
+              padding: 8px 0 16px;
+
+              &:not(:last-child) {
+                border-bottom: 1px solid var(--b5);
+              }
+            }
+
+            flex-direction: column;
+
+            > .details {
+              display: flex;
+              gap: 4px;
+              height: 24px;
+              align-items: center;
+
+              > .profile {
+                display: flex;
+                align-items: center;
+                gap: 8px;
+                height: 100%;
+
+                > .avatar {
+                  height: 100%;
+                  aspect-ratio: 1 / 1;
+                  background-color: var(--b5);
+                  border-radius: 100%;
+                }
+
+                > .name {
+                  font-weight: 500;
+                }
+              }
+
+              > .date {
+
+              }
+
+            }
+
+            > .content {
+              line-height: 2rem;
+              max-height: calc(2rem * 2);
+              overflow: hidden;
+              word-break: break-word;
+            }
+
+            > .post {
+
+            }
+          }
+        }
+      }
+    }
+
+    > .columnB {
+      grid-area: columnB;
+
+      > .blogStatistics {
+        grid-area: blogStatistics;
+      }
+    }
+
+  }
+}

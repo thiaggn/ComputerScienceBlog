@@ -28,7 +28,7 @@ export default function GIcon({children, fill, weight, grade, opticalsize, color
     return <span className={j('gicon', className)}
         style={{
             fontVariationSettings: `'FILL' ${isFilled}, 'wght' ${weight || 400}, 'GRAD' ${grade || 0}, 'opsz' ${opticalsize || 24}`,
-            color: color || "var(--b2)",
+            color: 'inherit',
             fontSize: size || 24,
         }}
     >
