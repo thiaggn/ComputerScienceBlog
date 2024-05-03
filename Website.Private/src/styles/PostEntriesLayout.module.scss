@@ -2,6 +2,7 @@
 
 .postEntries {
   width: 100%;
+  user-select: none;
 
   .buttonList {
     display: flex;
@@ -39,11 +40,21 @@
     > .main {
       @include gap(16px);
 
-      > .wrapper {
+      > .topWrapper {
         display: flex;
         flex-direction: column;
         gap: 8px;
+
+        > .headerWrapper {
+          display: flex;
+          justify-content: space-between;
+
+          > .postEntriesListHeader {
+            display: none;
+          }
+        }
       }
+
 
       > .postEntriesList {
         display: grid;
@@ -51,9 +62,15 @@
         gap: 16px;
 
         > .postEntryItem {
-          @include box(var(--g1), 16px, 8px, null, var(--g2));
+          @include box(var(--g15), 16px, 8px, null, var(--g2));
           color: var(--b21);
           flex-direction: column;
+
+          @media screen and (max-width: 520px) {
+            > * {
+              font-size: 1.2rem;
+            }
+          }
 
           .title {
             font-weight: bold;
@@ -66,7 +83,8 @@
 
             .tags {
               display: flex;
-              gap: 8px;
+              gap: 4px;
+              flex-wrap: wrap;
             }
 
             .stats {
@@ -83,6 +101,55 @@
 
     > .aside {
 
+      > .topicEntriesListHeader {
+        margin-bottom: 12px;
+      }
+
+      > .topicEntriesList {
+        @include gap(12px);
+
+        > .topicEntryItem {
+          font-size: 1.2rem;
+          display: flex;
+          color: var(--b2);
+          border: unset;
+          border-radius: unset;
+          flex-direction: row;
+          justify-content: space-between;
+          padding: 4px 0 12px;
+          cursor: pointer;
+
+          &:not(:last-of-type) {
+            border-bottom: 1px var(--b5) solid;
+          }
+
+          @media screen and (min-width: 520px) {
+            &:hover {
+              .name {
+                color: var(--g4);
+              }
+            }
+          }
+
+          .articleCount {
+            color: var(--b3);
+          }
+
+          .name {
+            transition: 100ms;
+          }
+
+          .stats {
+            display: flex;
+            justify-content: space-between;
+
+            .vccount {
+              display: flex;
+              gap: 8px;
+            }
+          }
+        }
+      }
     }
 
     .searchBox {
@@ -121,14 +188,27 @@
     > .body {
       grid-template-columns: 1fr;
       grid-template-rows: fit-content(100%);
-      gap: 16px;
+      gap: 32px;
+
 
       > .main {
         order: 2;
 
-        > .searchBox {
+        > .topWrapper {
+          > .headerWrapper {
+            > .postEntriesListHeader {
+              display: flex;
+            }
+          }
+        }
+
+        .searchBox {
           display: none;
         }
+      }
+
+      > .aside {
+        order: 1;
       }
     }
   }

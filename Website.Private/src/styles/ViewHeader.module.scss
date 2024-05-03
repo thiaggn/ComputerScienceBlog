@@ -4,12 +4,12 @@
   justify-content: space-between;
   width: 100%;
   top: 0;
-
-  z-index: 3;
+  z-index: 10;
   transition: 400ms;
   color: var(--b2);
   border-bottom: 1px solid transparent;
   height: 120px;
+  background: var(--g0);
 
   > .main {
     display: flex;

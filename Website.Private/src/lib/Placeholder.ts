@@ -188,7 +188,7 @@ export namespace Placeholder {
         },
     ]
 
-    export const topicData: TopicEntryData[] = [
+    export const topicEntries: TopicEntryData[] = [
         {
             name: "Computação gráfica",
             views: 12345,

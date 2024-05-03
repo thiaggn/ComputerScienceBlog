@@ -9,6 +9,7 @@ import {Placeholder} from "../lib/Placeholder.ts";
 import {getFormattedElapsedTime, j} from "../lib/Helpers.ts";
 import ContainerHeader from "../components/ContainerHeader.tsx";
 import ViewAndCommentCount from "../components/ViewAndCommentCount.tsx";
+import BlueThinButton from "../components/BlueThinButton.tsx";
 
 export default function PostEntriesLayout() {
 
@@ -42,8 +43,13 @@ export default function PostEntriesLayout() {
 
         <div className={s.body}>
             <div className={s.main}>
-                <div className={s.wrapper}>
-                    <ContainerMenu className={s.menu} items={postVisibilityOptions} onSelect={handleVisibilitySelect}/>
+                <div className={s.topWrapper}>
+                    <div className={s.headerWrapper}>
+                        <ContainerHeader className={s.postEntriesListHeader} icon='newsmode' title="Postagens">
+
+                        </ContainerHeader>
+                        <ContainerMenu className={s.menu} items={postVisibilityOptions} onSelect={handleVisibilitySelect}/>
+                    </div>
                     <SearchBox/>
                 </div>
                 <div className={s.postEntriesList}>
@@ -51,9 +57,11 @@ export default function PostEntriesLayout() {
                 </div>
             </div>
             <div className={s.aside}>
-                <ContainerHeader  icon='label' title="Tópicos"/>
+                <ContainerHeader className={s.topicEntriesListHeader} icon='label' title="Tópicos">
+                    <BlueThinButton icon="add" text="Novo tópico"/>
+                </ContainerHeader>
                 <div className={s.topicEntriesList}>
-                    
+                    {Placeholder.topicEntries.map((topic, index) => <TopicEntry key={index} topic={topic}/>)}
                 </div>
             </div>
         </div>
@@ -77,6 +85,7 @@ function PostEntry({post}: { post: PostEntryData }) {
         <div className={s.postIntrisic}>
             <div className={s.tags}>
                 <div className={s.text}>{post.topic}</div>
+                <span>-</span>
                 <div className={s.text}>{post.section}</div>
             </div>
             <div className={s.stats}>
@@ -87,5 +96,10 @@ function PostEntry({post}: { post: PostEntryData }) {
 }
 
 function TopicEntry({topic}: { topic: TopicEntryData }) {
-    
+    return <div className={s.topicEntryItem}>
+        <div className={s.name}>{topic.name}</div>
+        <div className={s.stats}>
+            <div className={s.articleCount}>{topic.contentCount} artigos</div>
+        </div>
+    </div>
 }

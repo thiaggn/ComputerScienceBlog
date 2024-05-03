@@ -5,7 +5,7 @@ import {
     createBrowserRouter,
     createRoutesFromElements,
     Route,
-    RouterProvider,
+    RouterProvider, useLocation, useMatch,
     useNavigate,
     useOutlet
 } from "react-router-dom";
@@ -21,6 +21,7 @@ import {NavOption} from "./lib/Constants.ts";
 function App() {
     const view = useOutlet();
     const navigate = useNavigate();
+    const location = useLocation();
     const handleNavClick = (option: NavOption)=>{
         navigate(option);
         window.scrollTo(0, 0);
@@ -29,7 +30,7 @@ function App() {
     return <div className={j(s.app, 'default-theme')}>
         <div className={s.centralizer}>
             <div className={s.aside}>
-                <NavBar onNavClick={handleNavClick}/>
+                <NavBar currentOption={location.pathname} onNavClick={handleNavClick}/>
             </div>
 
             <div className={s.main}>

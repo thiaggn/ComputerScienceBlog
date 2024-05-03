@@ -24,10 +24,11 @@ function PillButton({label, icon, active, onClick}: PillButtonProperties) {
 
 type Properties = {
     onNavClick: (option: NavOption) => void;
+    currentOption: any;
 }
-export default function NavBar({onNavClick}: Properties) {
+export default function NavBar({onNavClick, currentOption}: Properties) {
 
-    const [currentNavOption, setCurrentNavOption] = useState<NavOption>(NavOption.Home);
+    const [currentNavOption, setCurrentNavOption] = useState<NavOption>(currentOption);
 
     return <div className={s.navbar}>
         <div className={s.topWrapper}>

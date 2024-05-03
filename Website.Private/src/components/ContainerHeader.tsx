@@ -15,5 +15,6 @@ export default function ContainerHeader(props: Properties) {
             {props.icon && <GIcon  className={s.icon}>{props.icon}</GIcon>}
             {props.title && <div className={s.title}>{props.title}</div>}
         </div>
+        {props.children && props.children}
     </div>
 }

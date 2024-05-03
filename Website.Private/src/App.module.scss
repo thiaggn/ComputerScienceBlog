@@ -27,7 +27,6 @@
       width: var(--centralizerWidth);
       @include scrollbar(8px, transparent, var(--b4), var(--b5));
 
-
       > * {
         animation: appear 0.3s ease-in-out;
         @keyframes appear {

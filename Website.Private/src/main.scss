@@ -53,7 +53,6 @@
 
  @media screen and (max-width: 520px) {
   font-size: 1.35rem;
-  font-family: Inter, sans-serif;
  }
 }
 
@@ -66,8 +65,10 @@ $default_theme: (
         shadowDarker: #c8d2bc,
         g0: #f0f3e8,
         g1: #d9e7cb,
+        g15: #e4efd3,
         g2: #B1D788,
         g3: darken(#B1D788, 20%),
+        g4: darken(#B1D788, 30%),
         b1: #1D240D,
         b2: #404231,
         b21: #43493e,
