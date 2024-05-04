@@ -1,9 +1,10 @@
 export enum NavOption {
-    Home= "/blog",
+    Home = "/blog",
     Posts = "/blog/posts",
     Comments = "/blog/comments",
     People = "/blog/people",
-    Settings = "/blog/settings"
+    Settings = "/blog/settings",
+    Editor = "blog/editor"
 }
 
 export const navButtons = [
@@ -13,16 +14,3 @@ export const navButtons = [
     {label: "Pessoas", icon: "person", key: NavOption.People},
     {label: "Ajustes", icon: "settings", key: NavOption.Settings}
 ]
-
-export enum PostVisibilityOption {
-    Published,
-    Draft,
-    Trash,
-}
-
-export const postVisibilityOptions = [
-    {label: "Público", key: PostVisibilityOption.Published},
-    {label: "Rascunho", key: PostVisibilityOption.Draft},
-    {label: "Lixeira", key: PostVisibilityOption.Trash},
-]
-

@@ -1,4 +1,4 @@
-@import "./styles/DefaultTheme";
+@import "styles/HelperStyles";
 
 .app {
   display: flex;
@@ -25,7 +25,9 @@
     > .main {
       display: grid;
       width: var(--centralizerWidth);
+      height: 100%;
       @include scrollbar(8px, transparent, var(--b4), var(--b5));
+
 
       > * {
         animation: appear 0.3s ease-in-out;

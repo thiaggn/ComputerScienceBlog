@@ -1,4 +1,4 @@
-@import "DefaultTheme";
+@import "HelperStyles";
 
 .postEntries {
   width: 100%;
@@ -100,52 +100,57 @@
     }
 
     > .aside {
+      position: sticky;
+      top: 32px;
+      height: fit-content;
 
-      > .topicEntriesListHeader {
-        margin-bottom: 12px;
-      }
+      > .container {
+        > .topicEntriesListHeader {
+          margin-bottom: 12px;
+        }
 
-      > .topicEntriesList {
-        @include gap(12px);
+        > .topicEntriesList {
+          @include gap(12px);
 
-        > .topicEntryItem {
-          font-size: 1.2rem;
-          display: flex;
-          color: var(--b2);
-          border: unset;
-          border-radius: unset;
-          flex-direction: row;
-          justify-content: space-between;
-          padding: 4px 0 12px;
-          cursor: pointer;
+          > .topicEntryItem {
+            font-size: 1.2rem;
+            display: flex;
+            color: var(--b2);
+            border: unset;
+            border-radius: unset;
+            flex-direction: row;
+            justify-content: space-between;
+            padding: 4px 0 12px;
+            cursor: pointer;
 
-          &:not(:last-of-type) {
-            border-bottom: 1px var(--b5) solid;
-          }
+            &:not(:last-of-type) {
+              border-bottom: 1px var(--b5) solid;
+            }
 
-          @media screen and (min-width: 520px) {
-            &:hover {
-              .name {
-                color: var(--g4);
+            @media screen and (min-width: 520px) {
+              &:hover {
+                .name {
+                  color: var(--g4);
+                }
               }
             }
-          }
 
-          .articleCount {
-            color: var(--b3);
-          }
+            .articleCount {
+              color: var(--b3);
+            }
 
-          .name {
-            transition: 100ms;
-          }
+            .name {
+              transition: 100ms;
+            }
 
-          .stats {
-            display: flex;
-            justify-content: space-between;
-
-            .vccount {
+            .stats {
               display: flex;
-              gap: 8px;
+              justify-content: space-between;
+
+              .vccount {
+                display: flex;
+                gap: 8px;
+              }
             }
           }
         }

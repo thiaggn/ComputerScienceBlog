@@ -1,6 +1,7 @@
 import s from "../styles/ViewHeader.module.scss";
 import {useEffect, useState} from "react";
-import {j} from "../lib/Helpers.ts";
+
+import {join} from "../lib/utils/join.ts";
 
 type Properties = {
     title: string,
@@ -17,7 +18,7 @@ export default function ViewHeader({title, children, className, subtitle, latera
 
     }, []);
 
-    return <div className={j(s.viewHeader, isMinimized && s.minimized, lateral && s.lateral, className)}>
+    return <div className={join(s.viewHeader, isMinimized && s.minimized, lateral && s.lateral, className)}>
         {!children && <div className={s.main}>
             <h1 className={s.title}>{title}</h1>
             <div className={s.subtitle}>

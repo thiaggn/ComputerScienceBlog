@@ -1,6 +1,5 @@
 import s from "./App.module.scss";
 import NavBar from "./components/NavBar.tsx";
-import {j} from "./lib/Helpers.ts";
 import {
     createBrowserRouter,
     createRoutesFromElements,
@@ -14,7 +13,9 @@ import PostEntriesLayout from "./layouts/PostEntriesLayout.tsx";
 import SettingsLayout from "./layouts/SettingsLayout.tsx";
 import CommentsLayout from "./layouts/CommentsLayout.tsx";
 import PeopleLayout from "./layouts/PeopleLayout.tsx";
-import {NavOption} from "./lib/Constants.ts";
+
+import {NavOption} from "./lib/constants/NavBarConstants.ts";
+import {join} from "./lib/utils/join.ts";
 
 
 
@@ -27,7 +28,7 @@ function App() {
         window.scrollTo(0, 0);
     }
 
-    return <div className={j(s.app, 'default-theme')}>
+    return <div className={join(s.app, 'default-theme')}>
         <div className={s.centralizer}>
             <div className={s.aside}>
                 <NavBar currentOption={location.pathname} onNavClick={handleNavClick}/>

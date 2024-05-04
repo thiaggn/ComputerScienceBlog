@@ -1,0 +1,46 @@
+@import "HelperStyles";
+
+.editor {
+  width: 100%;
+  padding-top: 32px;
+
+  .textarea {
+    min-height: 100%;
+    font-family: Roboto, sans-serif;
+    font-size: 1.4rem;
+    border: 1px var(--b6) solid;
+    padding: 16px;
+    line-height: 2.5rem;
+
+    .block {
+      margin-top: 0.5rem;
+      border-radius: 4px;
+      background: var(--g1);
+      width: 100%;
+      min-height: 2.8rem;
+      color: white;
+
+      &:focus {
+        outline: 1px var(--g2) solid;
+      }
+
+      .text, .code {
+        display: inline;
+      }
+
+      .text {
+        background-color: #74a5ce;
+        font-family: monospace;
+      }
+
+      .code {
+        background-color: #6ed37e;
+      }
+    }
+
+    &:focus {
+      outline: unset;
+      border: 1px var(--b6) solid;
+    }
+  }
+}

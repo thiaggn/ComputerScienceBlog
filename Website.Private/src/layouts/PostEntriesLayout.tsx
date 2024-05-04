@@ -3,13 +3,13 @@ import s from "../styles/PostEntriesLayout.module.scss";
 import GIcon from "../components/GIcon.tsx";
 import {useEffect, useState} from "react";
 import ContainerMenu from "../components/ContainerMenu.tsx";
-import {postVisibilityOptions} from "../lib/Constants.ts";
 import {PostEntryData, TopicEntryData} from "../lib/Types.ts";
-import {Placeholder} from "../lib/Placeholder.ts";
-import {getFormattedElapsedTime, j} from "../lib/Helpers.ts";
 import ContainerHeader from "../components/ContainerHeader.tsx";
 import ViewAndCommentCount from "../components/ViewAndCommentCount.tsx";
 import BlueThinButton from "../components/BlueThinButton.tsx";
+import {postVisibilityOptions} from "../lib/constants/PostEntriesConstants.ts";
+import {PostEntriesPlaceholder} from "../lib/placeholders/PostEntriesPlaceholder.ts";
+import {TopicEntriesDataPlaceholder} from "../lib/placeholders/TopicEntriesDataPlaceholder.ts";
 
 export default function PostEntriesLayout() {
 
@@ -48,20 +48,23 @@ export default function PostEntriesLayout() {
                         <ContainerHeader className={s.postEntriesListHeader} icon='newsmode' title="Postagens">
 
                         </ContainerHeader>
-                        <ContainerMenu className={s.menu} items={postVisibilityOptions} onSelect={handleVisibilitySelect}/>
+                        <ContainerMenu className={s.menu} items={postVisibilityOptions}
+                                       onSelect={handleVisibilitySelect}/>
                     </div>
                     <SearchBox/>
                 </div>
                 <div className={s.postEntriesList}>
-                    {Placeholder.postEntries.map((post, index) => <PostEntry key={index} post={post}/>)}
+                    {PostEntriesPlaceholder.map((post, index) => <PostEntry key={index} post={post}/>)}
                 </div>
             </div>
             <div className={s.aside}>
-                <ContainerHeader className={s.topicEntriesListHeader} icon='label' title="Tópicos">
-                    <BlueThinButton icon="add" text="Novo tópico"/>
-                </ContainerHeader>
-                <div className={s.topicEntriesList}>
-                    {Placeholder.topicEntries.map((topic, index) => <TopicEntry key={index} topic={topic}/>)}
+                <div className={s.container}>
+                    <ContainerHeader className={s.topicEntriesListHeader} icon='label' title="Tópicos">
+                        <BlueThinButton icon="add" text="Novo tópico"/>
+                    </ContainerHeader>
+                    <div className={s.topicEntriesList}>
+                        {TopicEntriesDataPlaceholder.map((topic, index) => <TopicEntry key={index} topic={topic}/>)}
+                    </div>
                 </div>
             </div>
         </div>
@@ -99,7 +102,7 @@ function TopicEntry({topic}: { topic: TopicEntryData }) {
     return <div className={s.topicEntryItem}>
         <div className={s.name}>{topic.name}</div>
         <div className={s.stats}>
-            <div className={s.articleCount}>{topic.contentCount} artigos</div>
+            <div className={s.articleCount}>{topic.contentCount} páginas</div>
         </div>
     </div>
 }

@@ -20,11 +20,11 @@ export type PostEntryData = {
     section: string,
     views: number,
     comments: number,
+    contentUrl?: string
 }
 
 export type TopicEntryData = {
     name: string,
-    views: number,
-    comments: number,
     contentCount: number;
 }
+

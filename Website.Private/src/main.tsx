@@ -8,6 +8,7 @@ import PostEntriesLayout from "./layouts/PostEntriesLayout.tsx";
 import CommentsLayout from "./layouts/CommentsLayout.tsx";
 import PeopleLayout from "./layouts/PeopleLayout.tsx";
 import SettingsLayout from "./layouts/SettingsLayout.tsx";
+import EditorLayout from "./layouts/EditorLayout.tsx";
 
 const appRouter = createBrowserRouter(
     createRoutesFromElements(
@@ -17,6 +18,7 @@ const appRouter = createBrowserRouter(
             <Route path="blog/comments" element={<CommentsLayout/>}/>
             <Route path="blog/people" element={<PeopleLayout/>}/>
             <Route path="blog/settings" element={<SettingsLayout/>}/>
+            <Route path="blog/editor" element={<EditorLayout/>}/>
         </Route>
     )
 );

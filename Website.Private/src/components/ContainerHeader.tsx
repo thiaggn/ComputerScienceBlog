@@ -1,6 +1,7 @@
 import s from "../styles/ContainerHeader.module.scss";
 import GIcon from "./GIcon.tsx";
-import {j} from "../lib/Helpers.ts";
+
+import {join} from "../lib/utils/join.ts";
 
 type Properties = {
     children?: any;
@@ -10,7 +11,7 @@ type Properties = {
 }
 
 export default function ContainerHeader(props: Properties) {
-    return <div className={j(s.containerHeader, props.className)}>
+    return <div className={join(s.containerHeader, props.className)}>
         <div className={s.static}>
             {props.icon && <GIcon  className={s.icon}>{props.icon}</GIcon>}
             {props.title && <div className={s.title}>{props.title}</div>}

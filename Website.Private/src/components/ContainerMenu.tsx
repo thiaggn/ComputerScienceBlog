@@ -1,6 +1,7 @@
 import s from "../styles/ContainerMenu.module.scss";
 import {useState} from "react";
-import {j} from "../lib/Helpers.ts";
+
+import {join} from "../lib/utils/join.ts";
 
 type Properties = {
     items: { label: string, key: any }[]
@@ -16,7 +17,7 @@ export default function ContainerMenu({items, onSelect, className}: Properties) 
         onSelect(key)
     }
 
-    return <div className={j(s.containerMenu, className)}>
+    return <div className={join(s.containerMenu, className)}>
         {items.map((item) => {
             const isSelected = item.key === selected;
 

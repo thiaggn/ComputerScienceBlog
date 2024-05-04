@@ -1,6 +1,7 @@
 import s from "./GIcon.module.scss";
 import {useState} from "react";
-import {j} from "../lib/Helpers.ts";
+
+import {join} from "../lib/utils/join.ts";
 
 type Properties = {
     children: string,
@@ -25,7 +26,7 @@ export default function GIcon({children, fill, weight, grade, opticalsize, color
         setIsFilled(0);
     }
 
-    return <span className={j('gicon', className)}
+    return <span className={join('gicon', className)}
         style={{
             fontVariationSettings: `'FILL' ${isFilled}, 'wght' ${weight || 400}, 'GRAD' ${grade || 0}, 'opsz' ${opticalsize || 24}`,
             color: 'inherit',

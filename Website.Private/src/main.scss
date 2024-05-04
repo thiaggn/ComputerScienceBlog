@@ -1,6 +1,6 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@100..900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap');
 
-@import "./styles/DefaultTheme";
+@import "styles/HelperStyles";
 
 @font-face {
  font-family: GIcons;
@@ -61,9 +61,9 @@ ul {
 }
 
 $default_theme: (
-        lightGray: #8a9183,
+        "lightGray": #8a9183,
         shadowDarker: #c8d2bc,
-        g0: #f0f3e8,
+        g0: #f5f8ed,
         g1: #d9e7cb,
         g15: #e4efd3,
         g2: #B1D788,

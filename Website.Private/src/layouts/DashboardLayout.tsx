@@ -1,10 +1,14 @@
 import ViewHeader from "../components/ViewHeader.tsx";
 import s from "../styles/DashboardLayout.module.scss";
-import {getFormattedDate, getFormattedElapsedTime, getGreeting} from "../lib/Helpers.ts";
 import ContainerHeader from "../components/ContainerHeader.tsx";
-import {Placeholder} from "../lib/Placeholder.ts";
 import GIcon from "../components/GIcon.tsx";
 import {RecentCommentData} from "../lib/Types.ts";
+import {RecentWorkDataPlaceholder} from "../lib/placeholders/RecentWorkDataPlaceholder.ts";
+import {RecentCommentsDataPlaceholder} from "../lib/placeholders/RecentCommentsDataPlaceholder.ts";
+import {getFormattedElapsedTime} from "../lib/utils/getFormattedElapsedTime.ts";
+import {getGreeting} from "../lib/utils/getGreeting.ts";
+import {getFormattedDate} from "../lib/utils/getFormattedDate.ts";
+
 export default function DashboardLayout() {
 
     return <div className={s.dashboard} >
@@ -22,7 +26,7 @@ export default function DashboardLayout() {
                 <div className={s.recentWork}>
                     <ContainerHeader  className={s.header} title="Visto por último"/>
                     <div className={s.list}>
-                        {Placeholder.recentWork.map((item, index) =>
+                        {RecentWorkDataPlaceholder.map((item, index) =>
                             <RecentWork key={index} title={item.title}/>
                         )}
                     </div>
@@ -30,7 +34,7 @@ export default function DashboardLayout() {
                 <div className={s.recentComments}>
                     <ContainerHeader className={s.header} icon="chat_bubble" title="Comentários recentes"/>
                     <div className={s.list}>
-                        {Placeholder.recentComments.map((item, index)  =>
+                        {RecentCommentsDataPlaceholder.map((item, index)  =>
                             <RecentComment key={index} comment={item}/>
                         )}
                     </div>
