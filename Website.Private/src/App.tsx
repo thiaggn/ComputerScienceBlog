@@ -1,4 +1,4 @@
-import s from "./App.module.scss";
+import s from "./styles/App.module.scss";
 import NavBar from "./components/NavBar.tsx";
 import {
     createBrowserRouter,

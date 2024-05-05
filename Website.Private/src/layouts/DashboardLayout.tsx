@@ -7,7 +7,6 @@ import {RecentWorkDataPlaceholder} from "../lib/placeholders/RecentWorkDataPlace
 import {RecentCommentsDataPlaceholder} from "../lib/placeholders/RecentCommentsDataPlaceholder.ts";
 import {getFormattedElapsedTime} from "../lib/utils/getFormattedElapsedTime.ts";
 import {getGreeting} from "../lib/utils/getGreeting.ts";
-import {getFormattedDate} from "../lib/utils/getFormattedDate.ts";
 
 export default function DashboardLayout() {
 
@@ -15,7 +14,7 @@ export default function DashboardLayout() {
         <ViewHeader
             className={s.mainHeader}
             title={"Oi, Thiago"}
-            subtitle={getFormattedDate()}
+            subtitle={"Sábado, 4 de Maio"}
             lateral={<div className={s.headerButton}>
                 <GIcon>more_vert</GIcon>
             </div>}

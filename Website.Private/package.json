@@ -10,11 +10,15 @@
     "preview": "vite preview"
   },
   "dependencies": {
+    "@tanstack/react-query": "^5.34.1",
+    "@tanstack/react-query-devtools": "^5.34.1",
+    "@types/uuid": "^9.0.8",
     "immutable": "^5.0.0-beta.5",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-router-dom": "^6.23.0",
-    "sass": "^1.76.0"
+    "sass": "^1.76.0",
+    "uuid": "^9.0.1"
   },
   "devDependencies": {
     "@types/react": "^18.2.66",
