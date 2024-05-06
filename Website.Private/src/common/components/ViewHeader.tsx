@@ -1,7 +1,7 @@
-import s from "../styles/ViewHeader.module.scss";
+import s from "../../styles/ViewHeader.module.scss";
 import {useEffect, useState} from "react";
 
-import {join} from "../lib/utils/join.ts";
+import {join} from "../../lib/utils/join.ts";
 
 type Properties = {
     title: string,

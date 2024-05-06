@@ -1,17 +1,17 @@
-import ViewHeader from "../components/ViewHeader.tsx";
-import s from "../styles/PostEntriesLayout.module.scss";
-import GIcon from "../components/GIcon.tsx";
+import ViewHeader from "../../common/components/ViewHeader.tsx";
+import s from "../../styles/PostEntriesLayout.module.scss";
+import GIcon from "../../common/components/GIcon.tsx";
 import {useEffect, useState} from "react";
-import ContainerMenu from "../components/ContainerMenu.tsx";
-import {PostEntryData, TopicEntryData} from "../lib/Types.ts";
-import ContainerHeader from "../components/ContainerHeader.tsx";
-import ViewAndCommentCount from "../components/ViewAndCommentCount.tsx";
-import BlueThinButton from "../components/BlueThinButton.tsx";
-import {postVisibilityOptions} from "../lib/constants/PostEntriesConstants.ts";
-import {PostEntriesPlaceholder} from "../lib/placeholders/PostEntriesPlaceholder.ts";
-import {TopicEntriesDataPlaceholder} from "../lib/placeholders/TopicEntriesDataPlaceholder.ts";
+import ContainerMenu from "../../common/components/ContainerMenu.tsx";
+import {PostEntryData, TopicEntryData} from "../../lib/Types.ts";
+import ContainerHeader from "../../common/components/ContainerHeader.tsx";
+import ViewAndCommentCount from "../../common/components/ViewAndCommentCount.tsx";
+import BlueThinButton from "../../common/components/BlueThinButton.tsx";
+import {postVisibilityOptions} from "../../lib/constants/PostEntriesConstants.ts";
+import {PostEntriesPlaceholder} from "../../lib/placeholders/PostEntriesPlaceholder.ts";
+import {TopicEntriesDataPlaceholder} from "../../lib/placeholders/TopicEntriesDataPlaceholder.ts";
 
-export default function PostEntriesLayout() {
+export default function PostEntriesPage() {
 
     const [isMobile, setIsMobile] = useState<boolean>(window.innerWidth <= 520);
 

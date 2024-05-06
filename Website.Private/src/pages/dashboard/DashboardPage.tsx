@@ -1,14 +1,14 @@
-import ViewHeader from "../components/ViewHeader.tsx";
-import s from "../styles/DashboardLayout.module.scss";
-import ContainerHeader from "../components/ContainerHeader.tsx";
-import GIcon from "../components/GIcon.tsx";
-import {RecentCommentData} from "../lib/Types.ts";
-import {RecentWorkDataPlaceholder} from "../lib/placeholders/RecentWorkDataPlaceholder.ts";
-import {RecentCommentsDataPlaceholder} from "../lib/placeholders/RecentCommentsDataPlaceholder.ts";
-import {getFormattedElapsedTime} from "../lib/utils/getFormattedElapsedTime.ts";
-import {getGreeting} from "../lib/utils/getGreeting.ts";
+import ViewHeader from "../../common/components/ViewHeader.tsx";
+import s from "../../styles/DashboardLayout.module.scss";
+import ContainerHeader from "../../common/components/ContainerHeader.tsx";
+import GIcon from "../../common/components/GIcon.tsx";
+import {RecentCommentData} from "../../lib/Types.ts";
+import {RecentWorkDataPlaceholder} from "../../lib/placeholders/RecentWorkDataPlaceholder.ts";
+import {RecentCommentsDataPlaceholder} from "../../lib/placeholders/RecentCommentsDataPlaceholder.ts";
+import {getFormattedElapsedTime} from "../../lib/utils/getFormattedElapsedTime.ts";
+import {getGreeting} from "../../lib/utils/getGreeting.ts";
 
-export default function DashboardLayout() {
+export default function DashboardPage() {
 
     return <div className={s.dashboard} >
         <ViewHeader

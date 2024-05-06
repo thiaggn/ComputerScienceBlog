@@ -1,7 +1,7 @@
 import s from "./GIcon.module.scss";
 import {useState} from "react";
 
-import {join} from "../lib/utils/join.ts";
+import {join} from "../../lib/utils/join.ts";
 
 type Properties = {
     children: string,

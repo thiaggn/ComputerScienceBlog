@@ -1,9 +1,9 @@
-import s from "../styles/NavBar.module.scss";
+import s from "../../styles/NavBar.module.scss";
 import GIcon from "./GIcon.tsx";
 import {useState} from "react";
 
-import {navButtons, NavOption} from "../lib/constants/NavBarConstants.ts";
-import {join} from "../lib/utils/join.ts";
+import {navButtons, NavOption} from "../../lib/constants/NavBarConstants.ts";
+import {join} from "../../lib/utils/join.ts";
 
 type PillButtonProperties = { label: string, icon: string, active: boolean, onClick: () => void }
 function PillButton({label, icon, active, onClick}: PillButtonProperties) {

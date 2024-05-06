@@ -1,4 +1,4 @@
-import s from "../styles/BlueThinButton.module.scss"
+import s from "../../styles/BlueThinButton.module.scss"
 import GIcon from "./GIcon.tsx";
 
 type Properties = {

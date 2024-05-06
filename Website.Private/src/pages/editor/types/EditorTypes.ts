@@ -1,4 +1,6 @@
 import {v4 as v4uuid} from "uuid";
+import {Map} from "immutable";
+
 export enum TagType {
     Text,
     Code,
@@ -30,13 +32,20 @@ export type PostData = {
 }
 
 export class PostItem {
-    public blocks: BlockItem[];
+    public blocks: Map<string, BlockItem>;
     public id: string;
 
     constructor(data: PostData) {
-        this.blocks = data.blocks.map(block => new BlockItem(block));
         this.id = v4uuid();
+        this.blocks = Map<string, BlockItem>().withMutations((map: Map<string, BlockItem>) => {
+            for (let block of data.blocks) {
+                const blockItem = new BlockItem(block);
+                map.set(blockItem.id, blockItem);
+            }
+        });
     }
+
+
 }
 
 export class BlockItem {
@@ -55,6 +64,7 @@ export class TagItem {
     public type: TagType;
     public content: string;
     public id: string;
+
     constructor(data: TagData) {
         this.type = data.type;
         this.content = data.content;

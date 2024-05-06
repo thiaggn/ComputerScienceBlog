@@ -1,4 +1,4 @@
-import {BlockType, PostData, TagType} from "../types/EditorTypes.ts";
+import {BlockType, PostData, TagType} from "../../pages/editor/types/EditorTypes.ts";
 
 export const EditablePostDataPlaceholder: PostData = {
     blocks: [

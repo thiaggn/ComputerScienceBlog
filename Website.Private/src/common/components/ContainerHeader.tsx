@@ -1,7 +1,7 @@
-import s from "../styles/ContainerHeader.module.scss";
+import s from "../../styles/ContainerHeader.module.scss";
 import GIcon from "./GIcon.tsx";
 
-import {join} from "../lib/utils/join.ts";
+import {join} from "../../lib/utils/join.ts";
 
 type Properties = {
     children?: any;

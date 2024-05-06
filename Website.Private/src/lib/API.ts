@@ -1,5 +1,5 @@
 import {EditablePostDataPlaceholder} from "./placeholders/EditablePostDataPlaceholder.ts";
-import {BlockData, PostData, PostItem, TagData, TagItem} from "./types/EditorTypes.ts";
+import {BlockData, PostData, PostItem, TagData, TagItem} from "../pages/editor/types/EditorTypes.ts";
 
 export class API {
 
@@ -17,7 +17,6 @@ export class API {
         const postData = this.map.get(postId);
 
         if(postData) {
-            console.log("Fetched!")
             return new PostItem(this.editablePost);
         }
 
@@ -26,7 +25,6 @@ export class API {
 
     public static async addBlockToEditablePost(data: BlockData) {
         await this.wait();
-        console.log("Updated!")
         this.editablePost.blocks.push(data);
     }
 }

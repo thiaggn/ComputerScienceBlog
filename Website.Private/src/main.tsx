@@ -3,24 +3,27 @@ import ReactDOM from 'react-dom/client'
 import App from './App.tsx'
 import './main.scss'
 import {createBrowserRouter, createRoutesFromElements, Route, RouterProvider} from "react-router-dom";
-import DashboardLayout from "./layouts/DashboardLayout.tsx";
-import PostEntriesLayout from "./layouts/PostEntriesLayout.tsx";
-import CommentsLayout from "./layouts/CommentsLayout.tsx";
-import PeopleLayout from "./layouts/PeopleLayout.tsx";
-import SettingsLayout from "./layouts/SettingsLayout.tsx";
-import EditorLayout from "./layouts/EditorLayout.tsx";
+import DashboardPage from "./pages/dashboard/DashboardPage.tsx";
+import PostEntriesPage from "./pages/posts/PostEntriesPage.tsx";
+import CommentsPage from "./pages/comments/CommentsPage.tsx";
+import PeoplePage from "./pages/people/PeoplePage.tsx";
+import SettingsPage from "./pages/settings/SettingsPage.tsx";
+import EditorPage from "./pages/editor/EditorPage.tsx";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
+import {Map} from "immutable";
+
+
 
 const appRouter = createBrowserRouter(
     createRoutesFromElements(
         <Route element={<App/>}>
-            <Route path="blog" element={<DashboardLayout/>}/>
-            <Route path="blog/posts" element={<PostEntriesLayout/>}/>
-            <Route path="blog/comments" element={<CommentsLayout/>}/>
-            <Route path="blog/people" element={<PeopleLayout/>}/>
-            <Route path="blog/settings" element={<SettingsLayout/>}/>
-            <Route path="blog/editor" element={<EditorLayout/>}/>
+            <Route path="blog" element={<DashboardPage/>}/>
+            <Route path="blog/posts" element={<PostEntriesPage/>}/>
+            <Route path="blog/comments" element={<CommentsPage/>}/>
+            <Route path="blog/people" element={<PeoplePage/>}/>
+            <Route path="blog/settings" element={<SettingsPage/>}/>
+            <Route path="blog/editor" element={<EditorPage/>}/>
         </Route>
     )
 );
@@ -29,10 +32,10 @@ const appRouter = createBrowserRouter(
 *  instead of staying "fresh", and that's the default behavior. If you don't want that
 *  to happen, you cant change how your stale time is set up.*/
 const appQueryClient = new QueryClient({
-    defaultOptions: {
+    defaultOptions :{
         queries: {
-            staleTime: 1000 * 60,
-            // refetchInterval: 1000 * 1   // Refetches every 1s
+            // Após quanto tempo o react query vai apagar o cache
+            gcTime: 1000 * 60 * 10
         }
     }
 });

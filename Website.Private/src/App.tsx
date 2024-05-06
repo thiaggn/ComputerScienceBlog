@@ -1,5 +1,5 @@
 import s from "./styles/App.module.scss";
-import NavBar from "./components/NavBar.tsx";
+import NavBar from "./common/components/NavBar.tsx";
 import {
     createBrowserRouter,
     createRoutesFromElements,
@@ -8,11 +8,11 @@ import {
     useNavigate,
     useOutlet
 } from "react-router-dom";
-import DashboardLayout from "./layouts/DashboardLayout.tsx";
-import PostEntriesLayout from "./layouts/PostEntriesLayout.tsx";
-import SettingsLayout from "./layouts/SettingsLayout.tsx";
-import CommentsLayout from "./layouts/CommentsLayout.tsx";
-import PeopleLayout from "./layouts/PeopleLayout.tsx";
+import DashboardPage from "./pages/dashboard/DashboardPage.tsx";
+import PostEntriesPage from "./pages/posts/PostEntriesPage.tsx";
+import SettingsPage from "./pages/settings/SettingsPage.tsx";
+import CommentsPage from "./pages/comments/CommentsPage.tsx";
+import PeoplePage from "./pages/people/PeoplePage.tsx";
 
 import {NavOption} from "./lib/constants/NavBarConstants.ts";
 import {join} from "./lib/utils/join.ts";

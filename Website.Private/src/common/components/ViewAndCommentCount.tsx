@@ -1,4 +1,4 @@
-import s from '../styles/ViewAndCommentCount.module.scss'
+import s from '../../styles/ViewAndCommentCount.module.scss'
 import GIcon from "./GIcon.tsx";
 
 type Properties = {
