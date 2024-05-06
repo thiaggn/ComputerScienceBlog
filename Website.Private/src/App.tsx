@@ -14,7 +14,7 @@ import SettingsPage from "./pages/settings/SettingsPage.tsx";
 import CommentsPage from "./pages/comments/CommentsPage.tsx";
 import PeoplePage from "./pages/people/PeoplePage.tsx";
 
-import {NavOption} from "./lib/constants/NavBarConstants.ts";
+import {NavOption} from "./lib/constants/NavOption.ts";
 import {join} from "./lib/utils/join.ts";
 
 

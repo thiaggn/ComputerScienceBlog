@@ -1,5 +1,5 @@
 import ViewHeader from "../../common/components/ViewHeader.tsx";
-import s from "../../styles/PostEntriesLayout.module.scss";
+import s from "../../styles/PostEntriesPage.module.scss";
 import GIcon from "../../common/components/GIcon.tsx";
 import {useEffect, useState} from "react";
 import ContainerMenu from "../../common/components/ContainerMenu.tsx";
@@ -7,7 +7,7 @@ import {PostEntryData, TopicEntryData} from "../../lib/Types.ts";
 import ContainerHeader from "../../common/components/ContainerHeader.tsx";
 import ViewAndCommentCount from "../../common/components/ViewAndCommentCount.tsx";
 import BlueThinButton from "../../common/components/BlueThinButton.tsx";
-import {postVisibilityOptions} from "../../lib/constants/PostEntriesConstants.ts";
+import {postVisibilityFilters} from "../dashboard/PostEntriesConstants.ts";
 import {PostEntriesPlaceholder} from "../../lib/placeholders/PostEntriesPlaceholder.ts";
 import {TopicEntriesDataPlaceholder} from "../../lib/placeholders/TopicEntriesDataPlaceholder.ts";
 
@@ -48,7 +48,7 @@ export default function PostEntriesPage() {
                         <ContainerHeader className={s.postEntriesListHeader} icon='newsmode' title="Postagens">
 
                         </ContainerHeader>
-                        <ContainerMenu className={s.menu} items={postVisibilityOptions}
+                        <ContainerMenu className={s.menu} items={postVisibilityFilters}
                                        onSelect={handleVisibilitySelect}/>
                     </div>
                     <SearchBox/>

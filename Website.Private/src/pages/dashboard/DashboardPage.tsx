@@ -1,5 +1,5 @@
 import ViewHeader from "../../common/components/ViewHeader.tsx";
-import s from "../../styles/DashboardLayout.module.scss";
+import s from "../../styles/DashboardPage.module.scss";
 import ContainerHeader from "../../common/components/ContainerHeader.tsx";
 import GIcon from "../../common/components/GIcon.tsx";
 import {RecentCommentData} from "../../lib/Types.ts";
