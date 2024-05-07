@@ -1,22 +1,20 @@
 import {BlockItem, BlockType, editableDivConfig} from "../types/BlockTypes.ts";
 import s from "../styles/TextEditor.module.scss";
 import EditorTag from "./EditorTag.tsx";
-import {useCallback, useRef} from "react";
+import {useCallback, useEffect, useRef} from "react";
+import {useEditorListener, useEditorTarget} from "../contexts/EditorListener.ts";
 
 type Properties = {
     blockItem: BlockItem;
 }
 export default function EditorBlock({blockItem}: Properties) {
 
-    const handleInput = useCallback(() => {
-        console.log('input')
-
-    }, []);
+    const tagElement = useRef<any>();
+    useEditorTarget(tagElement);
 
     switch (blockItem.type) {
         case BlockType.Text:
-
-            return <div id={blockItem.id} className={s.block} onInput={handleInput}  {...editableDivConfig}>
+            return <div ref={tagElement} id={blockItem.id} className={s.block}  {...editableDivConfig}>
                 {blockItem.tags.map(tagItem => <EditorTag key={tagItem.id} tagItem={tagItem}/>)}
             </div>
     }

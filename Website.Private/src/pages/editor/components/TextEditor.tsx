@@ -1,16 +1,16 @@
 import {EditablePostItem} from "../types/PostTypes.ts";
 import s from "../styles/TextEditor.module.scss";
 import EditorBlock from "./EditorBlock.tsx";
-import {useEffect} from "react";
-import {createEditorListener} from "../hooks/createEditorListener.ts";
+import {useEditorListener, useEditorTarget} from "../contexts/EditorListener.ts";
 
 type Properties = {
     post: EditablePostItem;
 }
-
-export const editorEvents = createEditorListener();
 export default function TextEditor({post}: Properties) {
 
+    useEditorListener((data: any) => {
+        console.log("Houve alguma alteração nos posts.", data);
+    });
 
     return <div className={s.textEditor}>
         {post.blocks.map(block => <EditorBlock key={block.id} blockItem={block}/>)}
