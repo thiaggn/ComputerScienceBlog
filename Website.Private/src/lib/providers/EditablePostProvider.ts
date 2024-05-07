@@ -3,7 +3,7 @@ import {EditablePostDataPlaceholder} from "../placeholders/EditablePostDataPlace
 
 export class EditablePostProvider {
     public static async get(postId: string): Promise<EditablePostItem> {
-        await new Promise(resolve => setTimeout(resolve, 1000));
+        await new Promise(resolve => setTimeout(resolve, 1));
         return EditablePostItem.create(EditablePostDataPlaceholder);
     }
 }

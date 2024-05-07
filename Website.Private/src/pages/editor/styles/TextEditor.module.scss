@@ -1,0 +1,48 @@
+.textEditor {
+  width: 100%;
+  min-height: 300px;
+  padding: 32px;
+  border: 1px solid var(--b5);
+  font-family: 'Reddit Sans Condensed', Roboto, sans-serif;
+  text-align: justify;
+  line-height: 3rem;
+
+  &:focus {
+    outline: none;
+  }
+
+  .block {
+    background: rgba(128, 128, 128, 0.12);
+    width: 100%;
+
+    &:not(:first-of-type) {
+      margin-top: 16px;
+    }
+  }
+
+  .tag {
+    font-size: 1.6rem;
+    font-weight: 500;
+    display: inline;
+
+
+    &.text {
+      background: rgba(0, 0, 0, 0.11);
+    }
+
+    &.bold {
+      font-weight: bolder;
+      background: rgba(71, 178, 178, 0.49);
+    }
+
+    &.italic {
+      font-style: italic;
+      background: rgba(178, 71, 169, 0.49);
+    }
+
+    &.code {
+      font-family: "JetBrains Mono", sans-serif;
+      background: rgba(101, 178, 71, 0.49);
+    }
+  }
+}

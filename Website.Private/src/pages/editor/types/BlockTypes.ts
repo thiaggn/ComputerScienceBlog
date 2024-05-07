@@ -6,6 +6,11 @@ export enum BlockType {
     MultiColumn
 }
 
+export const editableDivConfig = {
+    contentEditable: true,
+    suppressContentEditableWarning: true
+}
+
 export interface BlockData {
     id: string;
     type: BlockType;

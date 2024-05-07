@@ -1,7 +1,7 @@
 import s from "./styles/EditorPage.module.scss"
 import {useEffect, useState} from "react";
 import {EditablePostItem} from "./types/PostTypes.ts";
-import PostEditor from "./components/PostEditor.tsx";
+import TextEditor from "./components/TextEditor.tsx";
 import {EditablePostProvider} from "../../lib/providers/EditablePostProvider.ts";
 
 export default function EditorPage() {
@@ -17,6 +17,6 @@ export default function EditorPage() {
     }, []);
 
     return <div className={s.editorPage}>
-        {post && <PostEditor post={post}/>}
+        {post && <TextEditor post={post}/>}
     </div>
 }

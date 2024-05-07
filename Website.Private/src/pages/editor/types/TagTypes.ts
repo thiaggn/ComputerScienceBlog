@@ -2,6 +2,8 @@ import {v4 as v4uuid} from "uuid";
 export enum TagType {
     Text,
     Code,
+    Bold,
+    Italic,
 }
 export interface TagData {
     type: TagType,

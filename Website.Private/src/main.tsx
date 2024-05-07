@@ -11,9 +11,6 @@ import SettingsPage from "./pages/settings/SettingsPage.tsx";
 import EditorPage from "./pages/editor/EditorPage.tsx";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
-import {Map} from "immutable";
-
-
 
 const appRouter = createBrowserRouter(
     createRoutesFromElements(
@@ -39,6 +36,7 @@ const appQueryClient = new QueryClient({
         }
     }
 });
+
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
