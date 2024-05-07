@@ -8,6 +8,7 @@ import {TagData} from "../data/TagData.ts";
 export enum BlockType {
     Text
 }
+
 export class BlockItem implements EditorItem {
     public readonly role = ItemRole.Block;
     public readonly id: string;
@@ -28,6 +29,7 @@ export class BlockItem implements EditorItem {
         return new BlockItem(data.id || v4uuid(), data.type, tagItems);
     }
 
+
     public updateTags(updatedTags: TagItem | TagItem[]) {
         if (!Array.isArray(updatedTags)) updatedTags = [updatedTags];
 
@@ -42,7 +44,7 @@ export class BlockItem implements EditorItem {
             }
         })
 
-        return {...this, blocks: newTags};
+        return new BlockItem(this.id, this.type, newTags);
     }
 
     public removeTags(idsToRemove: string | string[]) {
@@ -52,7 +54,7 @@ export class BlockItem implements EditorItem {
             mutableTags.filter((block) => idsToRemove.includes(block.id))
         });
 
-        return {...this, blocks: newTags};
+        return new BlockItem(this.id, this.type, newTags);
     }
 
     public insertTags(start: number, blocks: TagItem[] | TagItem) {
@@ -61,7 +63,7 @@ export class BlockItem implements EditorItem {
         if (Array.isArray(blocks)) newTags = this.tags.splice(start, 0, ...blocks);
         else newTags = this.tags.splice(start, 0, blocks);
 
-        return {...this, blocks: newTags};
+        return new BlockItem(this.id, this.type, newTags);
     }
 }
 

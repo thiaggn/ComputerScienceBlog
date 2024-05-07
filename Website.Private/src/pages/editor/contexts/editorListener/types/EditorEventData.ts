@@ -1,16 +1,12 @@
-export enum UpdateAction {
+import {TagItem} from "../../../types/item/TagItem.ts";
+import {BlockItem} from "../../../types/item/BlockItem.ts";
+
+export enum EditorEventAction {
     Insert,
     Update,
-    Delete
+    Remove
 }
 export interface EditorEventData {
-    action: UpdateAction
-}
-
-interface EditorUpdateEventData extends EditorEventData {
-
-}
-
-interface EditorInsertEventData extends EditorEventData {
-
+    block: BlockItem,
+    action: EditorEventAction
 }

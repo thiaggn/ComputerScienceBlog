@@ -9,19 +9,10 @@ import {EditorListener} from "./contexts/editorListener/EditorListener.ts";
 const editorListener = createEditorListener();
 export default function EditorPage() {
 
-    const [post, setPost] = useState<PostItem>();
-
-    useEffect(() => {
-        const fetchPost = async () => {
-            setPost(await EditablePostProvider.get("1"));
-        }
-
-        fetchPost();
-    }, []);
 
     return <div className={s.editorPage}>
         <EditorListener.Provider value={editorListener}>
-            {post && <TextEditor post={post}/>}
+            {<TextEditor/>}
         </EditorListener.Provider>
     </div>
 }

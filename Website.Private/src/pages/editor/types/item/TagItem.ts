@@ -22,6 +22,6 @@ export class TagItem  implements EditorItem {
     }
 
     public static create(data: TagData) {
-        return new TagItem(v4uuid(), data.type, data.content);
+        return new TagItem(data.id ? data.id : v4uuid(), data.type, data.content);
     }
 }

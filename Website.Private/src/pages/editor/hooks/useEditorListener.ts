@@ -1,7 +1,8 @@
 import {useContext, useEffect} from "react";
-import {EditorListener} from "../contexts/editorListener/createEditorListener.ts";
 import {EditorListener} from "../contexts/editorListener/EditorListener.ts";
-export function useEditorListener(onTextChangeCallback: (data: any) => void) {
+import {EditorListenerCallback} from "../contexts/editorListener/createEditorListener.ts";
+
+export function useEditorListener(onTextChangeCallback: EditorListenerCallback) {
     const context = useContext(EditorListener);
     if(context === undefined) throw new Error("UseEditorListener context was not properly initialized");
 
@@ -9,6 +10,5 @@ export function useEditorListener(onTextChangeCallback: (data: any) => void) {
         context.setListener(onTextChangeCallback);
         return () => context.removeListener();
     }, []);
-
 }
 

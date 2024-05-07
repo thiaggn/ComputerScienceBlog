@@ -51,7 +51,7 @@ export class PostItem {
         return {...this, blocks: newBlocks};
     }
 
-    public insertBlocks(start: number, blocks: BlockItem[] | BlockItem) {
+    public insertBlocksAt(start: number, blocks: BlockItem[] | BlockItem) {
         let newBlocks: List<BlockItem>;
 
         if (Array.isArray(blocks)) newBlocks = this.blocks.splice(start, 0, ...blocks);

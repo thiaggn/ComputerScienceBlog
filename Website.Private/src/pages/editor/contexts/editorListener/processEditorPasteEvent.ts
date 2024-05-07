@@ -8,53 +8,52 @@ function toElement(html: string) {
     div.innerHTML = html.trim();
     return div.children;
 }
-export const processEditorPasteEvent = async (ev: ClipboardEvent) => {
+
+export async function processEditorPasteEvent(ev: ClipboardEvent): Promise<EditorItem[]> {
+
     ev.preventDefault();
     const htmlstr = ev.clipboardData?.getData("text/html") || "";
 
-    const tagsToAdd = List<TagItem>().withMutations((tags) => {
-        const pastedEditorItems: EditorItem[] = [];
+    const newEditorItems: EditorItem[] = [];
 
-        if (htmlstr) {
-            const elements = toElement(htmlstr);
+    if (htmlstr) {
+        const elements = toElement(htmlstr);
 
-            for (let element of elements) {
-                const tag = element as HTMLElement;
+        for (let element of elements) {
+            const tag = element as HTMLElement;
 
-                const editorItem = tag.getAttribute("editorListener-item")?.split(".")?.map(i => parseInt(i)) || null;
+            const editorItem = tag.getAttribute("editorListener-item")?.split(".")?.map(i => parseInt(i)) || null;
 
-                if (editorItem) {
-                    const role: ItemRole = editorItem[0];
-                    const type = editorItem[1];
+            if (editorItem) {
+                const [role, type] = editorItem;
 
-                    switch (role) {
-                        case ItemRole.Tag:
-                            pastedEditorItems.push(TagItem.create({
-                                type: type,
-                                content: tag.innerText
-                            }));
+                switch (role) {
+                    case ItemRole.Tag:
+                        newEditorItems.push(TagItem.create({
+                            type: type,
+                            content: tag.innerText
+                        }));
+                        break;
 
-                            break;
+                    case ItemRole.Block:
+                        newEditorItems.push(BlockItem.create({
+                            type: type,
+                            tags: []
+                        }))
+                        break;
 
-                        case ItemRole.Block:
-                            pastedEditorItems.push(BlockItem.create({
-                                type: type,
-                                tags: []
-                            }))
-                            break;
-
-                        case ItemRole.Column:
-                            break;
-                    }
+                    case ItemRole.Column:
+                        break;
                 }
-
-                else pastedEditorItems.push(TagItem.create({
-                    type: TagType.Text,
-                    content: tag.innerText
-                }));
             }
-        }
 
-        console.log(pastedEditorItems);
-    });
+            else newEditorItems.push(TagItem.create({
+                type: TagType.Text,
+                content: tag.innerText
+            }));
+        }
+    }
+
+    console.log("[!] Processed editor paste event", newEditorItems);
+    return newEditorItems;
 }

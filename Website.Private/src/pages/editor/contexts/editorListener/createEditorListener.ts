@@ -1,4 +1,3 @@
-import {EditorSelection} from "../../types/EditorSelection.ts";
 import {EditorCommand} from "../../types/EditorCommand.ts";
 import {processKeyboardCommandEvent} from "./processKeyboardCommandEvent.ts";
 import {TagItem} from "../../types/item/TagItem.ts";
@@ -11,34 +10,33 @@ import processBlockInputEvent from "./processBlockInputEvent.ts";
 export function createEditorListener() {
     const blockTargets = new Map<object, BlockTarget>;
     const tagTargets = new Map<object, TagTarget>;
-
-    let currentListener: EditorListenerCallback | undefined;
-    let lastSelection: EditorSelection;
+    let dispatchUpdates: EditorListenerCallback | undefined;
     let lastCommand: EditorCommand;
+
+    const onAnyBlockInput = (ev: Event) => {
+        if(dispatchUpdates != undefined) {
+            const editorEvents: EditorEventData[] = processBlockInputEvent(ev, tagTargets, blockTargets);
+            dispatchUpdates(editorEvents);
+        }
+    };
 
     document.addEventListener('keydown', (ev) => {
         lastCommand = processKeyboardCommandEvent(ev);
     })
 
-    document.addEventListener('selectionchange', () => {
-        const currentSelection = document.getSelection();
-        if(currentSelection) lastSelection = new EditorSelection(currentSelection);
-    });
-
     document.addEventListener("paste", processEditorPasteEvent);
-
 
     return {
         setListener: (callback: EditorListenerCallback) => {
-            currentListener = callback
+            dispatchUpdates = callback
         },
 
         removeListener: () => {
-            currentListener = undefined
+            dispatchUpdates = undefined
         },
 
         addBlockTarget: (element: Element, item: Readonly<BlockItem>) => {
-            element.addEventListener('input', processBlockInputEvent);
+            element.addEventListener('input', onAnyBlockInput);
             blockTargets.set(element, {
                 item: item
             });
@@ -46,7 +44,7 @@ export function createEditorListener() {
 
         removeBlockTarget: (element: Element) => {
             const el = blockTargets.get(element);
-            if (el) (element as HTMLElement).removeEventListener('input', processBlockInputEvent);
+            if (el) (element as HTMLElement).removeEventListener('input', onAnyBlockInput);
             blockTargets.delete(element);
         },
 
@@ -62,5 +60,5 @@ export function createEditorListener() {
     }
 }
 
-export type EditorListenerCallback = (data: EditorEventData) => void;
+export type EditorListenerCallback = (data: EditorEventData[]) => void;
 export type EditorListenerActions = ReturnType<typeof createEditorListener>;
