@@ -4,7 +4,7 @@ import {EditablePostItem} from "./types/PostTypes.ts";
 import TextEditor from "./components/TextEditor.tsx";
 import {EditablePostProvider} from "../../lib/providers/EditablePostProvider.ts";
 import {createEditorListener} from "./contexts/createEditorListener.ts";
-import {EditorListener} from "./contexts/EditorListener.ts";
+import {UseEditorListener} from "./hooks/useEditorListener.ts";
 
 const editorListener = createEditorListener();
 export default function EditorPage() {
@@ -20,8 +20,8 @@ export default function EditorPage() {
     }, []);
 
     return <div className={s.editorPage}>
-        <EditorListener.Provider value={editorListener}>
+        <UseEditorListener.Provider value={editorListener}>
             {post && <TextEditor post={post}/>}
-        </EditorListener.Provider>
+        </UseEditorListener.Provider>
     </div>
 }

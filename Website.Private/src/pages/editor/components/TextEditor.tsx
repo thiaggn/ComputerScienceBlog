@@ -1,7 +1,8 @@
 import {EditablePostItem} from "../types/PostTypes.ts";
 import s from "../styles/TextEditor.module.scss";
 import EditorBlock from "./EditorBlock.tsx";
-import {useEditorListener, useEditorTarget} from "../contexts/EditorListener.ts";
+import {useEditorListener} from "../hooks/useEditorListener.ts";
+import {useEditorBlockTarget} from "../hooks/useEditorBlockTarget.ts";
 
 type Properties = {
     post: EditablePostItem;
@@ -9,7 +10,7 @@ type Properties = {
 export default function TextEditor({post}: Properties) {
 
     useEditorListener((data: any) => {
-        console.log("Houve alguma alteração nos posts.", data);
+
     });
 
     return <div className={s.textEditor}>
