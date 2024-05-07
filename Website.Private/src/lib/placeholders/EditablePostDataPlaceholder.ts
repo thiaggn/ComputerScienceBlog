@@ -1,6 +1,6 @@
-import {PostData} from "../../pages/editor/types/PostTypes.ts";
-import {BlockType} from "../../pages/editor/types/BlockTypes.ts";
-import {TagType} from "../../pages/editor/types/TagTypes.ts";
+import {BlockType} from "../../pages/editor/types/item/BlockItem.ts";
+import {TagType} from "../../pages/editor/types/item/TagItem.ts";
+import {PostData} from "../../pages/editor/types/data/PostData.ts";
 
 export const EditablePostDataPlaceholder: PostData = {
     id: "postB",
@@ -38,9 +38,8 @@ export const EditablePostDataPlaceholder: PostData = {
             id: "blockD",
             type: BlockType.Text,
             tags: [
-                {type: TagType.Text, content: "Além disso, o OpenGL é amplamente utilizado em uma variedade de campos, incluindo "},
-                {type: TagType.Text, content: "jogos, simulações, visualização científica e "},
-                {type: TagType.Text, content: "design de "},
+                {type: TagType.Text, content: "Além disso, o OpenGL é amplamente utilizado em uma variedade de" +
+                        " campos, incluindo jogos, simulações, visualização científica e design de "},
                 {type: TagType.Bold, content: "CAD"},
                 {type: TagType.Text, content: " (Computer-Aided Design). "}
             ]
@@ -49,8 +48,7 @@ export const EditablePostDataPlaceholder: PostData = {
             id: "blockE",
             type: BlockType.Text,
             tags: [
-                {type: TagType.Text, content: "Sua versatilidade e poder tornam o OpenGL uma escolha popular entre os desenvolvedores de "},
-                {type: TagType.Text, content: "software gráfico, oferecendo uma base sólida para criar "},
+                {type: TagType.Text, content: "Sua versatilidade e poder tornam o OpenGL uma escolha popular entre os desenvolvedores de software gráfico, oferecendo uma base sólida para criar "},
                 {type: TagType.Italic, content: "aplicações visuais"},
                 {type: TagType.Text, content: " impressionantes. "}
             ]

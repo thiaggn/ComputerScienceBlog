@@ -1,9 +1,9 @@
-import {EditablePostItem} from "../../pages/editor/types/PostTypes.ts";
+import {PostItem} from "../../pages/editor/types/item/PostItem.ts";
 import {EditablePostDataPlaceholder} from "../placeholders/EditablePostDataPlaceholder.ts";
 
 export class EditablePostProvider {
-    public static async get(postId: string): Promise<EditablePostItem> {
+    public static async get(postId: string): Promise<PostItem> {
         await new Promise(resolve => setTimeout(resolve, 1));
-        return EditablePostItem.create(EditablePostDataPlaceholder);
+        return PostItem.create(EditablePostDataPlaceholder);
     }
 }

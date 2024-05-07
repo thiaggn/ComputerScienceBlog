@@ -1,6 +1,6 @@
-import {EditorCommand} from "../types/EditorCommand.ts";
+import {EditorCommand} from "../../types/EditorCommand.ts";
 
-export function processKeyboardCommand(ev: KeyboardEvent) {
+export function processKeyboardCommandEvent(ev: KeyboardEvent) {
     if (ev.key == 'z' && ev.ctrlKey) return EditorCommand.Undo;
     else if (ev.key == 'y' && ev.ctrlKey) return EditorCommand.Redo;
     else if (ev.key == 'v' && ev.ctrlKey && ev.shiftKey) return EditorCommand.PasteWithoutFormatting;

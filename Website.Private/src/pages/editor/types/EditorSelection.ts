@@ -1,18 +1,17 @@
 export class EditorSelection {
-    public readonly anchorNode: Node | null;
+    public readonly anchorNode: Node;
     public readonly anchorOffset: number;
-    public readonly focusNode: Node | null;
+    public readonly focusNode: Node;
     public readonly focusOffset: number;
     public readonly isCollapsed: boolean;
     public readonly withinSameElement: boolean;
     public readonly commonAncestor: Node;
     public readonly nodesWithinSelection: Node[] = [];
 
-    constructor() {
-        const selection = document.getSelection() as Selection;
-        this.anchorNode = selection.anchorNode;
+    constructor(selection: Selection) {
+        this.anchorNode = selection.anchorNode as Node;
         this.anchorOffset = selection.anchorOffset;
-        this.focusNode = selection.focusNode;
+        this.focusNode = selection.focusNode as Node;
         this.focusOffset = selection.focusOffset;
         this.isCollapsed = selection.isCollapsed;
         this.withinSameElement = selection.anchorNode === selection.focusNode;

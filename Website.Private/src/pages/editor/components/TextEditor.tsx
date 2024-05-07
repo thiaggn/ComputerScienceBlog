@@ -1,11 +1,11 @@
-import {EditablePostItem} from "../types/PostTypes.ts";
+import {PostItem} from "../types/item/PostItem.ts";
 import s from "../styles/TextEditor.module.scss";
 import EditorBlock from "./EditorBlock.tsx";
 import {useEditorListener} from "../hooks/useEditorListener.ts";
 import {useEditorBlockTarget} from "../hooks/useEditorBlockTarget.ts";
 
 type Properties = {
-    post: EditablePostItem;
+    post: PostItem;
 }
 export default function TextEditor({post}: Properties) {
 

@@ -1,23 +1,15 @@
-import {TagData, TagItem} from "./TagTypes.ts";
+import {TagItem} from "./TagItem.ts";
 import {List} from "immutable";
+import {EditorItem, ItemRole} from "./EditorItem.ts";
+import {v4 as v4uuid} from "uuid";
+import {BlockData} from "../data/BlockData.ts";
+import {TagData} from "../data/TagData.ts";
 
 export enum BlockType {
-    Text,
-    MultiColumn
+    Text
 }
-
-export const editableDivConfig = {
-    contentEditable: true,
-    suppressContentEditableWarning: true
-}
-
-export interface BlockData {
-    id: string;
-    type: BlockType;
-    tags: TagData[];
-}
-
-export class BlockItem {
+export class BlockItem implements EditorItem {
+    public readonly role = ItemRole.Block;
     public readonly id: string;
     public readonly type: BlockType;
     public readonly tags: List<TagItem>;
@@ -33,7 +25,7 @@ export class BlockItem {
             (data: TagData) => TagItem.create(data))
         );
 
-        return new BlockItem(data.id, data.type, tagItems);
+        return new BlockItem(data.id || v4uuid(), data.type, tagItems);
     }
 
     public updateTags(updatedTags: TagItem | TagItem[]) {
@@ -71,4 +63,9 @@ export class BlockItem {
 
         return {...this, blocks: newTags};
     }
+}
+
+export const editableDivConfig = {
+    contentEditable: true,
+    suppressContentEditableWarning: true
 }

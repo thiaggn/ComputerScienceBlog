@@ -1,15 +1,10 @@
-import {BlockData, BlockItem, BlockType} from "./BlockTypes.ts";
+import {BlockItem} from "./BlockItem.ts";
 import {List} from "immutable";
-import {TagItem} from "./TagTypes.ts";
+import {BlockData} from "../data/BlockData.ts";
+import {PostData} from "../data/PostData.ts";
 
 
-export interface PostData {
-    id: string;
-    title: string;
-    blocks: BlockData[];
-}
-
-export class EditablePostItem {
+export class PostItem {
     id: string;
     title: string;
     blocks: List<BlockItem>
@@ -26,7 +21,7 @@ export class EditablePostItem {
             (blockData: BlockData) => BlockItem.create(blockData))
         );
 
-        return new EditablePostItem(data.id, data.title, blockItems);
+        return new PostItem(data.id, data.title, blockItems);
     }
 
     public updateBlocks(updatedBlocks: BlockItem | BlockItem[]) {
