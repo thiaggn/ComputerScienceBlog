@@ -23,7 +23,10 @@ export class BlockItem implements EditorItem {
 
     public static create(data: BlockData) {
         const tagItems = List<TagItem>(data.tags.map(
-            (data: TagData) => TagItem.create(data))
+            (data: TagData) => {
+                data.content.trim();
+                return TagItem.create(data);
+            })
         );
 
         return new BlockItem(data.id || v4uuid(), data.type, tagItems);

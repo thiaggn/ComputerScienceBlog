@@ -1,5 +1,4 @@
 import {MutableRefObject, useContext, useEffect} from "react";
-import {EditorListener} from "../contexts/editorListener/createEditorListener.ts";
 import {BlockItem} from "../types/item/BlockItem.ts";
 import {EditorListener} from "../contexts/editorListener/EditorListener.ts";
 

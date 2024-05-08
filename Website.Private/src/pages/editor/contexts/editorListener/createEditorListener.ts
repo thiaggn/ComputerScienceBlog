@@ -6,27 +6,27 @@ import {processEditorPasteEvent} from "./processEditorPasteEvent.ts";
 import {EditorEventData} from "./types/EditorEventData.ts";
 import {BlockTarget, TagTarget} from "./types/Targets.ts";
 import processBlockInputEvent from "./processBlockInputEvent.ts";
+import {CaretMoveCommand} from "./CaretMoveCommand.ts";
 
 export function createEditorListener() {
     const blockTargets = new Map<object, BlockTarget>;
     const tagTargets = new Map<object, TagTarget>;
     let dispatchUpdates: EditorListenerCallback | undefined;
-    let lastCommand: EditorCommand;
-
+    let caretMoveCommand: CaretMoveCommand
     const onAnyBlockInput = (ev: Event) => {
         if(dispatchUpdates != undefined) {
-            const editorEvents: EditorEventData[] = processBlockInputEvent(ev, tagTargets, blockTargets);
-            dispatchUpdates(editorEvents);
+            const {updates, command} = processBlockInputEvent(ev, tagTargets, blockTargets);
+            caretMoveCommand = command;
+            dispatchUpdates(updates);
         }
     };
 
-    document.addEventListener('keydown', (ev) => {
-        lastCommand = processKeyboardCommandEvent(ev);
-    })
-
     document.addEventListener("paste", processEditorPasteEvent);
 
+
     return {
+        getCaretMoveCommand: () => caretMoveCommand,
+
         setListener: (callback: EditorListenerCallback) => {
             dispatchUpdates = callback
         },
@@ -55,7 +55,7 @@ export function createEditorListener() {
         },
 
         removeTagTarget: (element: Element) => {
-            tagTargets.delete(element);
+            const existed = tagTargets.delete(element);
         }
     }
 }

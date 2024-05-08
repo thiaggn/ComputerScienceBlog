@@ -13,7 +13,7 @@ export const EditablePostDataPlaceholder: PostData = {
             tags: [
                 {type: TagType.Text, content: "OpenGL é uma "},
                 {type: TagType.Bold, content: "API gráfica"},
-                {type: TagType.Text, content: " multiplataforma utilizada para renderização de gráficos 2D e 3D. "}
+                {type: TagType.Text, content: " multiplataforma utilizada para renderização de gráficos 2D e 3D."}
             ]
         },
         {

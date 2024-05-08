@@ -2,7 +2,7 @@ import {TagItem, TagType} from "../types/item/TagItem.ts";
 import s from "../styles/TextEditor.module.scss";
 import {join} from "../../../lib/utils/join.ts";
 import useEditorTagTarget from "../hooks/useEditorTagTarget.ts";
-import {useRef} from "react";
+import {useEffect, useRef} from "react";
 
 type Properties = {
     tagItem: TagItem

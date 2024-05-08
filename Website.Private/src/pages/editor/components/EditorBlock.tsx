@@ -2,7 +2,7 @@ import {BlockItem, BlockType, editableDivConfig} from "../types/item/BlockItem.t
 import s from "../styles/TextEditor.module.scss";
 import EditorTag from "./EditorTag.tsx";
 import {useCallback, useEffect, useRef} from "react";
-import {useEditorListener} from "../hooks/useEditorListener.ts";
+import {useEditorPost} from "../hooks/useEditorPost.ts";
 import {useEditorBlockTarget} from "../hooks/useEditorBlockTarget.ts";
 import {join} from "../../../lib/utils/join.ts";
 

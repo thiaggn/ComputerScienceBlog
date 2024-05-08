@@ -7,8 +7,10 @@ export class EditorSelection {
     public readonly withinSameElement: boolean;
     public readonly commonAncestor: Node;
     public readonly nodesWithinSelection: Node[] = [];
+    public readonly type: string;
 
     constructor(selection: Selection) {
+        this.type = selection.type;
         this.anchorNode = selection.anchorNode as Node;
         this.anchorOffset = selection.anchorOffset;
         this.focusNode = selection.focusNode as Node;

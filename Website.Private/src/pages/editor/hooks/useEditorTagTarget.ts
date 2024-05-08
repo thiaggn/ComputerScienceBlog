@@ -1,6 +1,5 @@
 import {MutableRefObject, useContext, useEffect} from "react";
 import {TagItem} from "../types/item/TagItem.ts";
-import {EditorListener} from "../contexts/editorListener/createEditorListener.ts";
 import {EditorListener} from "../contexts/editorListener/EditorListener.ts";
 
 export default function useEditorTagTarget(elementRef: MutableRefObject<any>, tagItem: TagItem) {
@@ -13,6 +12,10 @@ export default function useEditorTagTarget(elementRef: MutableRefObject<any>, ta
 
         element.setAttribute("editorListener-item", [tagItem.role, tagItem.type].join("."));
         context.addTagTarget(element, tagItem);
-        return () => context.removeTagTarget(element);
-    }, []);
+
+        return () => {
+            context.removeTagTarget(element)
+        };
+
+    }, [tagItem]);
 }

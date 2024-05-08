@@ -2,6 +2,7 @@ import {BlockItem} from "./BlockItem.ts";
 import {List} from "immutable";
 import {BlockData} from "../data/BlockData.ts";
 import {PostData} from "../data/PostData.ts";
+import {SelectionListener} from "../../contexts/editorListener/SelectionListener.ts";
 
 
 export class PostItem {
@@ -25,6 +26,7 @@ export class PostItem {
     }
 
     public updateBlocks(updatedBlocks: BlockItem | BlockItem[]) {
+
         if (!Array.isArray(updatedBlocks)) updatedBlocks = [updatedBlocks];
 
         let newBlocks = this.blocks.withMutations((mutableBlocks) => {
@@ -38,7 +40,7 @@ export class PostItem {
             }
         })
 
-        return {...this, blocks: newBlocks};
+        return new PostItem(this.id, this.title, newBlocks);
     }
 
     public removeBlocks(idsToRemove: string | string[]) {
@@ -48,7 +50,7 @@ export class PostItem {
             mutableBlocks.filter((block) => idsToRemove.includes(block.id))
         });
 
-        return {...this, blocks: newBlocks};
+        return new PostItem(this.id, this.title, newBlocks);
     }
 
     public insertBlocksAt(start: number, blocks: BlockItem[] | BlockItem) {
@@ -57,6 +59,6 @@ export class PostItem {
         if (Array.isArray(blocks)) newBlocks = this.blocks.splice(start, 0, ...blocks);
         else newBlocks = this.blocks.splice(start, 0, blocks);
 
-        return {...this, blocks: newBlocks};
+        return new PostItem(this.id, this.title, newBlocks);
     }
 }
