@@ -1,9 +1,9 @@
 import {BlockState} from "../types/state/BlockState.ts";
 import {RefObject, useEffect} from "react";
 import {usePostStore} from "../../../store/postStore.ts";
-import {TagIdRequestEvent} from "./useTagListeners.ts";
+import {TagIdRequestEvent} from "./useTag.ts";
 
-export default function useBlockListeners(blockState: BlockState, blockElement: RefObject<HTMLDivElement>) {
+export default function useBlock(blockState: BlockState, blockElement: RefObject<HTMLDivElement>) {
     const post = usePostStore((state) => ({
         removeTag: state.removeTag,
     }))
@@ -15,7 +15,6 @@ export default function useBlockListeners(blockState: BlockState, blockElement: 
 
                     if (mutation.type == "childList") {
                         for (let removedNode of mutation.removedNodes) {
-
                             const tagId: any = await new Promise<string>((res) => {
                                 const event = new CustomEvent<TagIdRequestEvent>("tagid", {
                                     detail: {
@@ -30,7 +29,6 @@ export default function useBlockListeners(blockState: BlockState, blockElement: 
 
                             blockElement.current?.appendChild(removedNode);
                             post.removeTag(blockState.id, tagId);
-                            console.log("removed tag", tagId);
                         }
                     }
                 }

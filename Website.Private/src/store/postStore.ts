@@ -3,10 +3,16 @@ import {PostState} from "../pages/editor/types/state/PostState.ts";
 import {BlockState} from "../pages/editor/types/state/BlockState.ts";
 import {TagState} from "../pages/editor/types/state/TagState.ts";
 
+
 export const usePostStore = create<PostState>((set) => ({
     id: "",
     title: "",
     blocks: [],
+    offset: 0,
+
+    setOffset: (offset:number) => set((state: PostState) => {
+        return {offset}
+    }),
 
     setPost: (post: Partial<PostState>) => set((state: PostState) => {
        return post;

@@ -1,7 +1,7 @@
 import {TagState, TagType} from "../types/state/TagState.ts";
 import s from '../styles/TextEditor.module.scss';
 import {join} from "../../../lib/utils/join.ts";
-import useTagListeners from "../hooks/useTagListeners.ts";
+import useTag from "../hooks/useTag.ts";
 import {useRef} from "react";
 import {BlockState} from "../types/state/BlockState.ts";
 
@@ -19,7 +19,7 @@ const styles: Record<TagType, string> = {
 export default function TagComponent({tagData, parentBlock}: Properties) {
 
     const tagRef = useRef<HTMLDivElement>(null);
-    useTagListeners(tagData, parentBlock, tagRef);
+    useTag(tagData, parentBlock, tagRef);
 
     return <div className={join(s.tag, styles[tagData.type])} ref={tagRef}>
         {tagData.content}

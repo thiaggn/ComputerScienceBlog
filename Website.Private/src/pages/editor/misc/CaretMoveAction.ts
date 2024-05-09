@@ -1,17 +1,9 @@
+import {SelectionObserver} from "./SelectionObserver.ts";
+
 export class CaretMoveAction {
-    anchorNode: Node;
-    focusNode: Node;
-    anchorOffset: number;
-    focusOffset: number;
+    public readonly move: Function;
 
-    private constructor(anchorNode: Node, focusNode: Node, anchorOffset: number, focusOffset: number) {
-        this.anchorNode = anchorNode;
-        this.focusNode = focusNode;
-        this.anchorOffset = anchorOffset;
-        this.focusOffset = focusOffset;
-    }
-
-    public static singleMovement() {
-
+    public constructor(move: Function) {
+        this.move = move;
     }
 }

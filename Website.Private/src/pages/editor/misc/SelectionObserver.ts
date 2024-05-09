@@ -10,11 +10,14 @@ export class SelectionObserver {
     public static observe() {
         document.addEventListener("selectionchange", (ev) => {
             const selection = document.getSelection();
-            if(selection) this.lastSelectionRecord = new SelectionRecord(selection);
+            if(selection) {
+                this.lastSelectionRecord = new SelectionRecord(selection);
+            }
         })
     }
-    public static getLastSelection(): SelectionRecord {
-        if(!this.lastSelectionRecord) throw new Error("Empty Selection Record");
+
+    static get lastSelection() {
         return this.lastSelectionRecord;
     }
+
 }
