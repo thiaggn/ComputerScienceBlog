@@ -1,4 +1,4 @@
-export class EditorSelection {
+export class SelectionRecord {
     public readonly anchorNode: Node;
     public readonly anchorOffset: number;
     public readonly focusNode: Node;

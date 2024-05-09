@@ -1,12 +1,26 @@
 import s from "../styles/TextEditor.module.scss";
-import EditorBlock from "./EditorBlock.tsx";
-import {useEditorPost} from "../hooks/useEditorPost.ts";
+import BlockComponent from "./BlockComponent.tsx";
+import {BlockState} from "../types/state/BlockState.ts";
+import {usePostStore} from "../../../store/postStore.ts";
+import {PostState} from "../types/state/PostState.ts";
+import {useEffect} from "react";
+import {EditablePostProvider} from "../../../lib/providers/EditablePostProvider.ts";
 
-type Properties = {}
-export default function TextEditor({}: Properties) {
-    const post = useEditorPost("1");
+export default function TextEditor() {
+    const {blocks, setPost} = usePostStore((state: PostState) => ({
+        blocks: state.blocks,
+        setPost: state.setPost
+    }));
 
-    return <div className={s.textEditor}>
-        {post && post.blocks.map(block => <EditorBlock key={block.id} blockItem={block}/>)}
+    useEffect(() => {
+        const fetchPost = async () => {
+            setPost(await EditablePostProvider.get(""))
+        }
+
+        fetchPost();
+    }, []);
+
+    return <div className={s.textEditor} contentEditable={true} suppressContentEditableWarning>
+        {blocks && blocks.map(data => <BlockComponent key={data.id} blockState={data}/>)}
     </div>
 }

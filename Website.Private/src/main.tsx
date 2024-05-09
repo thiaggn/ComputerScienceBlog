@@ -11,7 +11,7 @@ import SettingsPage from "./pages/settings/SettingsPage.tsx";
 import EditorPage from "./pages/editor/EditorPage.tsx";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
-import {SelectionListener} from "./pages/editor/contexts/editorListener/SelectionListener.ts";
+import {SelectionObserver} from "./pages/editor/misc/SelectionObserver.ts";
 
 const appRouter = createBrowserRouter(
     createRoutesFromElements(
@@ -38,7 +38,7 @@ const appQueryClient = new QueryClient({
     }
 });
 
-SelectionListener.start();
+SelectionObserver.observe();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>
