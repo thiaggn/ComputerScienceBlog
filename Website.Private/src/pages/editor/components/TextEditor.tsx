@@ -8,10 +8,10 @@ import {EditablePostProvider} from "../../../lib/providers/EditablePostProvider.
 import {SelectionObserver} from "../misc/SelectionObserver.ts";
 
 export default function TextEditor() {
-    const {blocks, setPost, offset} = usePostStore((state: PostState) => ({
+    const {blocks, setPost, caretPosition} = usePostStore((state: PostState) => ({
         blocks: state.blocks,
         setPost: state.setPost,
-        offset: state.offset
+        caretPosition: state.caretPosition
     }));
 
     useEffect(() => {
@@ -22,14 +22,10 @@ export default function TextEditor() {
     }, []);
 
     const handleInput = () => {
+        console.log(SelectionObserver.lastSelection);
         const selection = document.getSelection();
-        const lastSelection = SelectionObserver.lastSelection;
-
-        if(selection && lastSelection) {
-            const {focusNode, focusOffset, anchorNode, anchorOffset} = lastSelection;
-            if(offset == 0.5)selection.setPosition(anchorNode, anchorOffset);
-            else if(offset == -0.5) selection.setPosition(focusNode, focusOffset);
-            else selection.setPosition(focusNode, focusOffset + offset);
+        if(caretPosition && selection) {
+            selection.setPosition(caretPosition.node, caretPosition.offset);
         }
     }
 

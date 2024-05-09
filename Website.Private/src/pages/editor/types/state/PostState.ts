@@ -1,15 +1,16 @@
 import {BlockState} from "./BlockState.ts";
 import {TagState} from "./TagState.ts";
+import {CaretPosition} from "../CaretPosition.ts";
 
 export interface PostState {
     id: string;
     title: string;
     blocks: BlockState[];
-    offset: number;
+    caretPosition: CaretPosition | null,
 
     setPost: (post: Partial<PostState>) => void;
     updateTag: (targetBlockId: any, newTag: TagState) => void;
-    removeTag: (targetBlockId: any, targetTagId: any) => void;
+    removeTags: (targetBlockId: any, targetTagIds: any[]) => void;
     insertTag: (targetBlockId: any, beforeTagId: any) => void;
-    setOffset: (value: number) => void;
+    setCaretPosition: (caretPosition: CaretPosition) => void;
 }

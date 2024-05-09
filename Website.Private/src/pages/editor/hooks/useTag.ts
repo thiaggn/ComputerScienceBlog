@@ -3,10 +3,12 @@ import {RefObject, useEffect} from "react";
 import {BlockState} from "../types/state/BlockState.ts";
 import {usePostStore} from "../../../store/postStore.ts";
 import {SelectionObserver} from "../misc/SelectionObserver.ts";
+import {CaretPosition} from "../types/CaretPosition.ts";
+import {is} from "immutable";
 
 export type TagIdRequestEvent = {
-    blockId: any,
-    respond: (tagId: any) => void
+    parentBlock: any,
+    accept: (tagId: any) => void
 }
 
 declare global {
@@ -18,14 +20,17 @@ export default function useTag(currentTag: TagState, parentBlock: BlockState, re
 
     const post = usePostStore(state => ({
         updateTag: state.updateTag,
-        setOffset: state.setOffset
+        setCaretPosition: state.setCaretPosition
     }))
 
     useEffect(() => {
-        const element = ref.current;
+        const tagElement = ref.current;
 
-        if (element) {
+        if (tagElement) {
+            tagElement.setAttribute("editor-tag-element", currentTag.type.toString());
+
             const observer = new MutationObserver((mutations: MutationRecord[]) => {
+
                 for (let mutation of mutations) {
                     if (mutation.type == "characterData") {
                         const tagHtmlElement = mutation.target.parentElement;
@@ -35,30 +40,39 @@ export default function useTag(currentTag: TagState, parentBlock: BlockState, re
                                 const newTag = {
                                     ...currentTag,
                                     content: tagHtmlElement.innerText
-                                }
+                                } satisfies TagState;
 
                                 post.updateTag(parentBlock.id, newTag);
 
                                 const lastSelection = SelectionObserver.lastSelection;
 
-                                if(lastSelection) {
+                                if (lastSelection) {
 
-                                    if(lastSelection.type === 'Caret') {
+                                    if (lastSelection.type === 'Caret') {
                                         const difference = newTag.content.length - currentTag.content.length;
                                         const direction = difference > 0 ? 1 : -1;
-                                        post.setOffset(direction)
+                                        post.setCaretPosition({
+                                            node: lastSelection.focusNode,
+                                            offset: lastSelection.focusOffset + direction
+                                        } satisfies CaretPosition);
                                     }
 
                                     else {
+                                        const isLeftToRight = lastSelection.anchorOffset < lastSelection.focusOffset;
 
-                                        if(lastSelection.anchorOffset < lastSelection.focusOffset) {
-                                            post.setOffset(0.5);
+                                        if(isLeftToRight) {
+                                            post.setCaretPosition({
+                                                node: lastSelection.anchorNode,
+                                                offset: lastSelection.anchorOffset
+                                            })
                                         }
-
+                                        
                                         else {
-                                            post.setOffset(-0.5);
+                                            post.setCaretPosition({
+                                                node: lastSelection.focusNode,
+                                                offset: lastSelection.focusOffset
+                                            })
                                         }
-
                                     }
                                 }
                             }
@@ -69,20 +83,20 @@ export default function useTag(currentTag: TagState, parentBlock: BlockState, re
                 }
             });
 
-            observer.observe(element.firstChild!, {
+            observer.observe(tagElement.firstChild!, {
                 characterData: true,
             })
 
             const handleTagIdRequest = (ev: CustomEvent<TagIdRequestEvent>) => {
-                if (ev.detail.blockId == parentBlock.id) {
-                    ev.detail.respond(currentTag.id);
+                if (ev.detail.parentBlock == parentBlock.id) {
+                    ev.detail.accept(currentTag.id);
                 } else throw new Error();
             };
 
             ref.current.addEventListener("tagid", handleTagIdRequest)
 
             return () => {
-                element.removeEventListener("tagid", handleTagIdRequest)
+                tagElement.removeEventListener("tagid", handleTagIdRequest)
                 observer.disconnect();
             };
         }

@@ -2,16 +2,17 @@ import {create} from "zustand";
 import {PostState} from "../pages/editor/types/state/PostState.ts";
 import {BlockState} from "../pages/editor/types/state/BlockState.ts";
 import {TagState} from "../pages/editor/types/state/TagState.ts";
+import {CaretPosition} from "../pages/editor/types/CaretPosition.ts";
 
 
 export const usePostStore = create<PostState>((set) => ({
     id: "",
     title: "",
     blocks: [],
-    offset: 0,
+    caretPosition: null,
 
-    setOffset: (offset:number) => set((state: PostState) => {
-        return {offset}
+    setCaretPosition: (caretPosition: CaretPosition) => set((state: PostState) => {
+        return {caretPosition}
     }),
 
     setPost: (post: Partial<PostState>) => set((state: PostState) => {
@@ -38,11 +39,28 @@ export const usePostStore = create<PostState>((set) => ({
         } satisfies Partial<PostState>;
     }),
 
-    removeTag: (targetBlockId: any, targetTagId: any) => set((state: PostState) => {
+    removeTags: (targetBlockId: any, targetTagIds: any[]) => set((state: PostState) => {
         const newBlocks = state.blocks.map(block => {
             if(block.id != targetBlockId) return block;
+            let removedCount = 0;
 
-            const newTags: TagState[] = block.tags.filter(tag => tag.id != targetTagId);
+            const newTags: TagState[] = block.tags.filter(tag => {
+                if(removedCount < targetTagIds.length) {
+
+                    for(let i = removedCount; i < targetTagIds.length; i++) {
+                        const removedId = targetTagIds[i];
+
+                        if(removedId == tag.id) {
+                            removedCount++;
+                            return false;
+                        }
+                    }
+
+                    return true;
+                }
+
+                return true;
+            });
 
             return {
                 ...block,
