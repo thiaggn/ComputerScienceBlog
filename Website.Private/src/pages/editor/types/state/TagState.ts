@@ -6,9 +6,7 @@ export enum TagType {
     Italic,
 }
 export interface TagState {
-    role: TextEditorRole.Tag;
     id: string;
     type: TagType;
     content: any;
-    isInactive: boolean;
 }

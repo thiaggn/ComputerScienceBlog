@@ -22,7 +22,6 @@ export default function TextEditor() {
     }, []);
 
     const handleInput = () => {
-        console.log(SelectionObserver.lastSelection);
         const selection = document.getSelection();
         if(caretPosition && selection) {
             selection.setPosition(caretPosition.node, caretPosition.offset);

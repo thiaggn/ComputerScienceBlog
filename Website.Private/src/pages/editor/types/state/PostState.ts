@@ -11,6 +11,6 @@ export interface PostState {
     setPost: (post: Partial<PostState>) => void;
     updateTag: (targetBlockId: any, newTag: TagState) => void;
     removeTags: (targetBlockId: any, targetTagIds: any[]) => void;
-    insertTag: (targetBlockId: any, beforeTagId: any) => void;
+    insertTags: (targetBlockId: any, beforeTagId: string | null, tags: TagState[]) => void;
     setCaretPosition: (caretPosition: CaretPosition) => void;
 }

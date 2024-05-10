@@ -74,9 +74,49 @@ export const usePostStore = create<PostState>((set) => ({
         } satisfies Partial<PostState>;
     }),
 
-    insertTag: (targetBlockId: any, beforeTagId: any) => set((state: PostState) => {
-        return {
+    insertTags: (targetBlockId: any, beforeTagId: string | null, tags: TagState[]) => set((state: PostState) => {
 
-        };
+        const newBlocks = state.blocks.map(block => {
+            if(block.id != targetBlockId) return block;
+            let newTags: TagState[] = [];
+
+            let prevTag: TagState | undefined;
+            const processTag = (currTag: TagState) => {
+                if(prevTag != undefined && prevTag.type == currTag.type) {
+                    prevTag.content += currTag.content;
+                }
+                else {
+                    newTags.push(currTag);
+                }
+
+                prevTag = currTag;
+            }
+
+            if(beforeTagId == null) {
+                for(let currTag of tags) processTag(currTag);
+                for(let currTag of block.tags) processTag(currTag);
+            }
+
+            else {
+                newTags = [];
+
+                for(let tag of block.tags) {
+                    newTags.push(tag);
+
+                    if (tag.id == beforeTagId)  {
+                        newTags.push(...tags);
+                    }
+                }
+            }
+
+            return {
+                ...block,
+                tags: newTags
+            }
+        }) satisfies BlockState[];
+
+        return {
+            blocks: newBlocks
+        } satisfies Partial<PostState>;
     })
 }));

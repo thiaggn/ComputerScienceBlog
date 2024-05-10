@@ -66,7 +66,7 @@ export default function useTag(currentTag: TagState, parentBlock: BlockState, re
                                                 offset: lastSelection.anchorOffset
                                             })
                                         }
-                                        
+
                                         else {
                                             post.setCaretPosition({
                                                 node: lastSelection.focusNode,
