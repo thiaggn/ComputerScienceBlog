@@ -1,0 +1,9 @@
+Sobre as alterações, salvar:
+	estado do bloco,
+	qual posição a caret estava no bloco,
+
+Usar um setinterval, colocado numa ref, salvando o estado de 2s em 2s.
+Quando a página do editor desmontar, cancela o setinterval.
+
+
+

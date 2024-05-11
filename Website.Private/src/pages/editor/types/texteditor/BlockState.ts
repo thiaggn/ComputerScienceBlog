@@ -1,5 +1,5 @@
 import {TagState} from "./TagState.ts";
-import {TextEditorRole} from "./TextEditorRole.ts";
+import {TextEditorRole} from "../TextEditorRole.ts";
 
 export enum BlockType {
     Text

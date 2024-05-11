@@ -1,34 +1,17 @@
 import s from "../styles/TextEditor.module.scss";
 import BlockComponent from "./BlockComponent.tsx";
-import {BlockState} from "../types/state/BlockState.ts";
-import {usePostStore} from "../../../store/postStore.ts";
-import {PostState} from "../types/state/PostState.ts";
-import {useEffect} from "react";
-import {EditablePostProvider} from "../../../lib/providers/EditablePostProvider.ts";
-import {SelectionObserver} from "../misc/SelectionObserver.ts";
+import { useRef} from "react";
+import useEditor from "../hooks/useEditor.ts";
+import {BlockState} from "../types/texteditor/BlockState.ts";
 
-export default function TextEditor() {
-    const {blocks, setPost, caretPosition} = usePostStore((state: PostState) => ({
-        blocks: state.blocks,
-        setPost: state.setPost,
-        caretPosition: state.caretPosition
-    }));
+type Properties = {
+    blocks: BlockState[]
+}
+export default function TextEditor({blocks}: Properties) {
+    const elementRef = useRef<HTMLDivElement>(null);
+    useEditor(elementRef, blocks);
 
-    useEffect(() => {
-        const fetchPost = async () => {
-            setPost(await EditablePostProvider.get(""))
-        }
-        fetchPost();
-    }, []);
-
-    const handleInput = () => {
-        const selection = document.getSelection();
-        if(caretPosition && selection) {
-            selection.setPosition(caretPosition.node, caretPosition.offset);
-        }
-    }
-
-    return <div onInput={handleInput} className={s.textEditor} contentEditable={true} suppressContentEditableWarning>
+    return <div ref={elementRef}  className={s.textEditor} contentEditable={true} suppressContentEditableWarning>
         {blocks && blocks.map(data => <BlockComponent key={data.id} blockState={data}/>)}
     </div>
 }

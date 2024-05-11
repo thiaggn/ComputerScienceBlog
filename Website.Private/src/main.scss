@@ -85,6 +85,14 @@ $default_theme: (
  @each $key, $value in $default_theme {
   --#{$key}: #{$value};
  }
+
+ ::-moz-selection { /* Code for Firefox */
+  background: var(--b5);
+ }
+
+ ::selection {
+  background: rgba(0, 0, 0, 0.13);
+ }
 }
 
 body {

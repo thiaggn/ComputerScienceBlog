@@ -1,9 +1,9 @@
-import {TagState, TagType} from "../types/state/TagState.ts";
+import {TagState, TagType} from "../types/texteditor/TagState.ts";
 import s from '../styles/TextEditor.module.scss';
 import {join} from "../../../lib/utils/join.ts";
 import useTag from "../hooks/useTag.ts";
 import {useRef} from "react";
-import {BlockState} from "../types/state/BlockState.ts";
+import {BlockState} from "../types/texteditor/BlockState.ts";
 
 type Properties = {
     tagData: TagState,

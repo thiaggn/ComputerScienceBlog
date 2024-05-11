@@ -1,26 +1,20 @@
-import {TagState} from "../types/state/TagState.ts";
+import {TagState} from "../types/texteditor/TagState.ts";
 import {RefObject, useEffect} from "react";
-import {BlockState} from "../types/state/BlockState.ts";
+import {BlockState} from "../types/texteditor/BlockState.ts";
 import {usePostStore} from "../../../store/postStore.ts";
-import {SelectionObserver} from "../misc/SelectionObserver.ts";
-import {CaretPosition} from "../types/CaretPosition.ts";
-import {is} from "immutable";
-
-export type TagIdRequestEvent = {
-    parentBlock: any,
-    accept: (tagId: any) => void
-}
+import {SelectionObserver} from "../SelectionObserver.ts";
+import {CaretPositionRecord} from "../types/CaretPositionRecord.ts";
 
 declare global {
     export interface HTMLElementEventMap {
-        "tagid": CustomEvent<TagIdRequestEvent>
+        "removed": CustomEvent
     }
 }
 export default function useTag(currentTag: TagState, parentBlock: BlockState, ref: RefObject<HTMLDivElement>) {
 
     const post = usePostStore(state => ({
         updateTag: state.updateTag,
-        setCaretPosition: state.setCaretPosition
+        removeTags: state.removeTags
     }))
 
     useEffect(() => {
@@ -30,52 +24,19 @@ export default function useTag(currentTag: TagState, parentBlock: BlockState, re
             tagElement.setAttribute("editor-tag-element", currentTag.type.toString());
 
             const observer = new MutationObserver((mutations: MutationRecord[]) => {
-
                 for (let mutation of mutations) {
                     if (mutation.type == "characterData") {
                         const tagHtmlElement = mutation.target.parentElement;
 
                         if (tagHtmlElement) {
-                            if (tagHtmlElement.innerText.length > 0) {
-                                const newTag = {
-                                    ...currentTag,
-                                    content: tagHtmlElement.innerText
-                                } satisfies TagState;
 
-                                post.updateTag(parentBlock.id, newTag);
+                            const newTag = {
+                                ...currentTag,
+                                content: tagHtmlElement.innerText
+                            } satisfies TagState;
 
-                                const lastSelection = SelectionObserver.lastSelection;
-
-                                if (lastSelection) {
-
-                                    if (lastSelection.type === 'Caret') {
-                                        const difference = newTag.content.length - currentTag.content.length;
-                                        const direction = difference > 0 ? 1 : -1;
-                                        post.setCaretPosition({
-                                            node: lastSelection.focusNode,
-                                            offset: lastSelection.focusOffset + direction
-                                        } satisfies CaretPosition);
-                                    }
-
-                                    else {
-                                        const isLeftToRight = lastSelection.anchorOffset < lastSelection.focusOffset;
-
-                                        if(isLeftToRight) {
-                                            post.setCaretPosition({
-                                                node: lastSelection.anchorNode,
-                                                offset: lastSelection.anchorOffset
-                                            })
-                                        }
-
-                                        else {
-                                            post.setCaretPosition({
-                                                node: lastSelection.focusNode,
-                                                offset: lastSelection.focusOffset
-                                            })
-                                        }
-                                    }
-                                }
-                            }
+                            handleCaretUpdate(newTag, currentTag);
+                            post.updateTag(parentBlock.id, newTag);
                         }
 
                         break;
@@ -83,23 +44,55 @@ export default function useTag(currentTag: TagState, parentBlock: BlockState, re
                 }
             });
 
-            observer.observe(tagElement.firstChild!, {
+            const handleTagRemoval = () => {
+                post.removeTags(parentBlock.id, [currentTag.id]);
+            }
+
+            tagElement.addEventListener("removed", handleTagRemoval);
+
+            observer.observe(tagElement, {
                 characterData: true,
+                subtree: true
             })
 
-            const handleTagIdRequest = (ev: CustomEvent<TagIdRequestEvent>) => {
-                if (ev.detail.parentBlock == parentBlock.id) {
-                    ev.detail.accept(currentTag.id);
-                } else throw new Error();
-            };
-
-            ref.current.addEventListener("tagid", handleTagIdRequest)
-
             return () => {
-                tagElement.removeEventListener("tagid", handleTagIdRequest)
+                tagElement.removeEventListener("removed", handleTagRemoval);
                 observer.disconnect();
             };
         }
 
     }, [currentTag]);
+}
+
+
+const handleCaretUpdate = (newTag: TagState, currentTag: TagState) => {
+    const lastSelection = SelectionObserver.lastSelection;
+    if (lastSelection) {
+        let caretPosition: CaretPositionRecord;
+
+        if (lastSelection.type === 'Caret') {
+            const difference = newTag.content.length - currentTag.content.length;
+            const direction = difference > 0 ? 1 : -1;
+            caretPosition = {
+                node: lastSelection.focusNode,
+                offset: lastSelection.focusOffset + direction
+            };
+        } else {
+            const isLeftToRight = lastSelection.anchorOffset < lastSelection.focusOffset;
+
+            if (isLeftToRight) {
+                caretPosition = {
+                    node: lastSelection.anchorNode,
+                    offset: lastSelection.anchorOffset
+                }
+            } else {
+                caretPosition = {
+                    node: lastSelection.focusNode,
+                    offset: lastSelection.focusOffset
+                }
+            }
+        }
+
+        SelectionObserver.nextCaretPosition = caretPosition;
+    }
 }

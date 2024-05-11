@@ -1,4 +1,4 @@
-import {TagType} from "../state/TagState.ts";
+import {TagType} from "./TagState.ts";
 
 export interface TagData {
     type: TagType,

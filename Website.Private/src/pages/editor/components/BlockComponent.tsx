@@ -1,7 +1,7 @@
-import {BlockState} from "../types/state/BlockState.ts";
+import {BlockState} from "../types/texteditor/BlockState.ts";
 import s from "../styles/TextEditor.module.scss";
 import TagComponent from "./TagComponent.tsx";
-import {TagState} from "../types/state/TagState.ts";
+import {TagState} from "../types/texteditor/TagState.ts";
 import useBlock from "../hooks/useBlock.ts";
 import {useRef} from "react";
 

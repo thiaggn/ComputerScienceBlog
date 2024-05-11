@@ -1,10 +1,10 @@
-import {PostState} from "../../pages/editor/types/state/PostState.ts";
+import {PostState} from "../../pages/editor/types/texteditor/PostState.ts";
 import {EditablePostDataPlaceholder} from "../placeholders/EditablePostDataPlaceholder.ts";
 import {v4 as v4uuid} from "uuid";
-import {BlockState} from "../../pages/editor/types/state/BlockState.ts";
-import {TextEditorRole} from "../../pages/editor/types/state/TextEditorRole.ts";
-import {TagState} from "../../pages/editor/types/state/TagState.ts";
-import {PostData} from "../../pages/editor/types/data/PostData.ts";
+import {BlockState} from "../../pages/editor/types/texteditor/BlockState.ts";
+import {TextEditorRole} from "../../pages/editor/types/TextEditorRole.ts";
+import {TagState} from "../../pages/editor/types/texteditor/TagState.ts";
+import {PostData} from "../../pages/editor/types/texteditor/PostData.ts";
 
 export class EditablePostProvider {
     public static async get(postId: string): Promise<Partial<PostState>> {
