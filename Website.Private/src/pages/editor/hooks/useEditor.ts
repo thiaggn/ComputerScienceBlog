@@ -1,9 +1,7 @@
 import {RefObject, useEffect} from "react";
 import {usePostStore} from "../../../store/postStore.ts";
-import {PostState} from "../types/texteditor/PostState.ts";
-import {EditablePostProvider} from "../../../lib/providers/EditablePostProvider.ts";
-import {SelectionObserver} from "../SelectionObserver.ts";
-import {SnapshotManager} from "../SnapshotManager.ts";
+import {SelectionService} from "../SelectionService.ts";
+import {SnapshotService} from "../SnapshotService.ts";
 import {BlockState} from "../types/texteditor/BlockState.ts";
 
 export default function useEditor(ref: RefObject<HTMLDivElement>, blocks: BlockState[]) {
@@ -12,13 +10,14 @@ export default function useEditor(ref: RefObject<HTMLDivElement>, blocks: BlockS
         goToSnapshot: state.goToSnapshot
     }))
 
+    // ============== Everytime
     useEffect(() => {
         const element = ref.current;
 
         if (element) {
             const handleInput = () => {
                 const selection = document.getSelection();
-                const caretPosition = SelectionObserver.nextCaretPosition;
+                const caretPosition = SelectionService.nextCaretPosition;
 
                 if (caretPosition && selection) {
                     selection.setPosition(caretPosition.node, caretPosition.offset);
@@ -32,18 +31,19 @@ export default function useEditor(ref: RefObject<HTMLDivElement>, blocks: BlockS
         }
     });
 
+    // ============== When blocks changes
     useEffect(() => {
+
         const handleKeyboardEvent = (ev: KeyboardEvent) => {
             if (ev.ctrlKey && ev.key == "z") {
                 ev.preventDefault();
-                const snapshot = SnapshotManager.retrocede();
+                const snapshot = SnapshotService.retrocede();
                 if (snapshot.blocks != blocks) post.goToSnapshot(snapshot);
-
             }
 
             if (ev.ctrlKey && ev.key == "y") {
                 ev.preventDefault();
-                const snapshot = SnapshotManager.advance();
+                const snapshot = SnapshotService.advance();
                 if (snapshot.blocks != blocks) post.goToSnapshot(snapshot);
             }
 
@@ -52,7 +52,7 @@ export default function useEditor(ref: RefObject<HTMLDivElement>, blocks: BlockS
             }
 
             if (ev.key == "Backspace") {
-                const selection = SelectionObserver.lastSelection;
+                const selection = SelectionService.lastSelection;
                 if (!selection) return;
 
                 const {focusNode, anchorNode, focusOffset, anchorOffset} = selection;
@@ -70,9 +70,12 @@ export default function useEditor(ref: RefObject<HTMLDivElement>, blocks: BlockS
                     const tagElement = focusNode.parentElement as HTMLElement;
                     const direction = anchorOffset < focusOffset ? 1 : -1;
 
+                    const focusElement = focusNode.parentElement as HTMLElement;
+                    const anchorElement = anchorNode.parentElement as HTMLElement;
+
                     let selectionCoversEntireNode = direction > 0
-                        ? focusOffset == focusNode.textContent!.length
-                        : anchorOffset == focusNode.textContent!.length;
+                        ? focusOffset == focusElement.innerText!.length
+                        : anchorOffset == anchorElement.innerText!.length;
 
                     if (selectionCoversEntireNode) {
                         tagElement.dispatchEvent(new Event("removed"));
@@ -81,9 +84,22 @@ export default function useEditor(ref: RefObject<HTMLDivElement>, blocks: BlockS
                 }
 
                 else if (selection.type == 'Range') {
+
                     for(let removedElement of selection.fullySelectedTags) {
                         removedElement.dispatchEvent(new Event("removed"));
                     }
+
+                    for(let updatedTag of selection.partiallySelectedTags) {
+                        updatedTag.element.dispatchEvent(new CustomEvent("updated", {
+                            detail: updatedTag.unselectedContent
+                        }))
+                    }
+
+                    for(let removedBlock of selection.fullySelectedBlocks) {
+                        removedBlock.dispatchEvent(new Event("removed"));
+                    }
+
+                    ev.preventDefault();
                 }
             }
         };
@@ -93,6 +109,7 @@ export default function useEditor(ref: RefObject<HTMLDivElement>, blocks: BlockS
 
     }, [blocks]);
 
+    // ============== Once
     useEffect(() => {
         const handleDropEvent = (ev: DragEvent) => {
             ev.preventDefault();

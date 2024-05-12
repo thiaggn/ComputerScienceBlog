@@ -12,7 +12,8 @@
   }
 
   .block {
-    outline: 1px solid rgba(128, 128, 128, 0.12);
+    border-left: 3px solid rgb(223, 227, 222);
+    padding-left: 8px;
     width: 100%;
 
     &:not(:first-of-type) {

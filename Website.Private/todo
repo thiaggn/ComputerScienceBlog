@@ -1,9 +1,13 @@
-Sobre as alterações, salvar:
-	estado do bloco,
-	qual posição a caret estava no bloco,
+TO DO
 
-Usar um setinterval, colocado numa ref, salvando o estado de 2s em 2s.
-Quando a página do editor desmontar, cancela o setinterval.
-
-
+> Ao selecionar conteúdo de 2 blocos distintos e apertar backspace, as tags se reunem num único bloco.
+    ! Implementar isso sem remover ev.preventDefault(); em selection.type == 'Range' em useEditor.ts
+    ! Não previnir o efeito padrão causa a deleção dos elementos, e o react não consegue coletá-los para apagar.
+    ? Disparar um evento nos elementos com conteudo alterado, da mesma maneira que disparei um evento para remover.
+        ! Daquela forma, o react manejava a deleção da tag pq a tag atualizava o estado no zustand.
+        ? Passar ao evento o novo conteúdo da tag.
+        ? ACHO q o evento NAO DEVE SER disparado na tag, e sim no bloco.
+        ? Disparar um evento de request de TagState para cada tag, reuni-las num bloco novo.
+            ? Enviar os dados só para o primeiro bloco da seleção num evento "blockTagUpdate",
+            ? para os demais blocos, enviar um evento de remoção.
 

@@ -11,5 +11,6 @@ export interface PostState {
     setPost: (post: Partial<PostState>) => void;
     updateTag: (targetBlockId: any, newTag: TagState) => void;
     removeTags: (targetBlockId: any, targetTagIds: any[]) => void;
+    removeBlocks: (blockIds: any[]) => void;
     goToSnapshot: (snapshot: PostSnapshot) => void;
 }

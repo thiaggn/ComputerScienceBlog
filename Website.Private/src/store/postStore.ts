@@ -2,9 +2,8 @@ import {create} from "zustand";
 import {PostState} from "../pages/editor/types/texteditor/PostState.ts";
 import {BlockState} from "../pages/editor/types/texteditor/BlockState.ts";
 import {TagState} from "../pages/editor/types/texteditor/TagState.ts";
-import {SnapshotManager} from "../pages/editor/SnapshotManager.ts";
+import {SnapshotService} from "../pages/editor/SnapshotService.ts";
 import {PostSnapshot} from "../pages/editor/types/PostSnapshot.ts";
-import {SelectionObserver} from "../pages/editor/SelectionObserver.ts";
 export const usePostStore = create<PostState>((set) => ({
     id: "",
     title: "",
@@ -13,7 +12,7 @@ export const usePostStore = create<PostState>((set) => ({
     setPost: (post: Partial<PostState>) => set((state: PostState) => {
 
         if(post.blocks != null) {
-            SnapshotManager.setSnapshot(post.blocks);
+            SnapshotService.setSnapshot(post.blocks);
         }
 
         return {
@@ -44,7 +43,7 @@ export const usePostStore = create<PostState>((set) => ({
             }
         }) satisfies BlockState[];
 
-        SnapshotManager.captureSnapshot(newBlocks);
+        SnapshotService.captureSnapshot(newBlocks);
 
         return {
             blocks: newBlocks
@@ -62,9 +61,17 @@ export const usePostStore = create<PostState>((set) => ({
            }
         });
 
+        SnapshotService.captureSnapshot(newBlocks);
+
         return {
             blocks: newBlocks
         };
+    }),
+
+    removeBlocks: (blockIds: any[]) => set((state: PostState) => {
+       return {
+           blocks: state.blocks.filter(block => !blockIds.includes(block.id))
+       }
     }),
 
     insertTags: (targetBlockId: any, beforeTagId: string | null, tags: TagState[]) => set((state: PostState) => {

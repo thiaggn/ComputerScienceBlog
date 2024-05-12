@@ -1,11 +1,10 @@
 import {SelectionRecord} from "./types/SelectionRecord.ts";
 import {CaretPositionRecord} from "./types/CaretPositionRecord.ts";
 
-export class SelectionObserver {
+export class SelectionService {
 
     private static _lastSelection: SelectionRecord | undefined;
     private static _nextCaretPosition: CaretPositionRecord | undefined;
-
     private constructor() {}
     public static observe() {
         document.addEventListener("selectionchange", (ev) => {

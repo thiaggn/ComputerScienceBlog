@@ -2,12 +2,13 @@ import {TagState} from "../types/texteditor/TagState.ts";
 import {RefObject, useEffect} from "react";
 import {BlockState} from "../types/texteditor/BlockState.ts";
 import {usePostStore} from "../../../store/postStore.ts";
-import {SelectionObserver} from "../SelectionObserver.ts";
+import {SelectionService} from "../SelectionService.ts";
 import {CaretPositionRecord} from "../types/CaretPositionRecord.ts";
 
 declare global {
     export interface HTMLElementEventMap {
         "removed": CustomEvent
+        "updated": CustomEvent<string>
     }
 }
 export default function useTag(currentTag: TagState, parentBlock: BlockState, ref: RefObject<HTMLDivElement>) {
@@ -46,10 +47,20 @@ export default function useTag(currentTag: TagState, parentBlock: BlockState, re
 
             const handleTagRemoval = () => {
                 post.removeTags(parentBlock.id, [currentTag.id]);
+                console.log(`%cdeleted tag %c"${currentTag.content}"`, 'color: red', 'color: white');
+            }
+
+            const handleTagUpdate = (ev: CustomEvent<string>) => {
+                post.updateTag(parentBlock.id, {
+                    ...currentTag,
+                    content: ev.detail
+                })
+
+                console.log(`%cupdated tag %c"${ev.detail}"`, 'color: pink', 'color: white');
             }
 
             tagElement.addEventListener("removed", handleTagRemoval);
-
+            tagElement.addEventListener("updated", handleTagUpdate);
             observer.observe(tagElement, {
                 characterData: true,
                 subtree: true
@@ -57,6 +68,7 @@ export default function useTag(currentTag: TagState, parentBlock: BlockState, re
 
             return () => {
                 tagElement.removeEventListener("removed", handleTagRemoval);
+                tagElement.removeEventListener("updated", handleTagUpdate);
                 observer.disconnect();
             };
         }
@@ -66,7 +78,7 @@ export default function useTag(currentTag: TagState, parentBlock: BlockState, re
 
 
 const handleCaretUpdate = (newTag: TagState, currentTag: TagState) => {
-    const lastSelection = SelectionObserver.lastSelection;
+    const lastSelection = SelectionService.lastSelection;
     if (lastSelection) {
         let caretPosition: CaretPositionRecord;
 
@@ -93,6 +105,6 @@ const handleCaretUpdate = (newTag: TagState, currentTag: TagState) => {
             }
         }
 
-        SelectionObserver.nextCaretPosition = caretPosition;
+        SelectionService.nextCaretPosition = caretPosition;
     }
 }

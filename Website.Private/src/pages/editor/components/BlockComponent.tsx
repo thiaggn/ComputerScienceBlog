@@ -13,7 +13,7 @@ export default function BlockComponent({blockState}: Properties) {
     const blockRef = useRef<HTMLDivElement>(null);
     useBlock(blockState, blockRef);
 
-    return <div className={s.block} ref={blockRef}>
+    return <div className={s.block} ref={blockRef} >
         {blockState.tags.map((tagData: TagState) =>
             <TagComponent key={tagData.id} tagData={tagData} parentBlock={blockState}/>
         )}

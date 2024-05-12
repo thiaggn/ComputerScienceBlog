@@ -1,7 +1,7 @@
 import {PostSnapshot} from "./types/PostSnapshot.ts";
 import {BlockState} from "./types/texteditor/BlockState.ts";
 
-export class SnapshotManager {
+export class SnapshotService {
     private static snapshots: PostSnapshot[] = [];
     private static current: number = 0;
     private static versions: number = 0;
@@ -11,6 +11,7 @@ export class SnapshotManager {
 
     public static setSnapshot(blocks: BlockState[]) {
         this.snapshots = [{blocks}];
+
     }
 
     public static retrocede() {
@@ -19,10 +20,12 @@ export class SnapshotManager {
             this.current--;
         }
 
+
         return this.snapshots[this.current];
     }
 
     public static advance() {
+
         this.pushThrottledSnapshot();
         if (this.current < this.versions) {
             this.current++;
