@@ -1,13 +1,19 @@
-TO DO
+else if(ancestral.parentElement instanceof Element) {
+            if(ancestral.parentElement.hasAttribute("editor-editable")) {
+                const selectedTag = ancestral.parentElement.closest("[editor-tag]");
+                if(!selectedTag) return;
+                const text = ancestral.parentElement.textContent || ""
 
-> Ao selecionar conteúdo de 2 blocos distintos e apertar backspace, as tags se reunem num único bloco.
-    ! Implementar isso sem remover ev.preventDefault(); em selection.type == 'Range' em useEditor.ts
-    ! Não previnir o efeito padrão causa a deleção dos elementos, e o react não consegue coletá-los para apagar.
-    ? Disparar um evento nos elementos com conteudo alterado, da mesma maneira que disparei um evento para remover.
-        ! Daquela forma, o react manejava a deleção da tag pq a tag atualizava o estado no zustand.
-        ? Passar ao evento o novo conteúdo da tag.
-        ? ACHO q o evento NAO DEVE SER disparado na tag, e sim no bloco.
-        ? Disparar um evento de request de TagState para cada tag, reuni-las num bloco novo.
-            ? Enviar os dados só para o primeiro bloco da seleção num evento "blockTagUpdate",
-            ? para os demais blocos, enviar um evento de remoção.
+                const selectedContent = direction > 0
+                    ? text.slice(selection.anchorOffset, selection.focusOffset + 1)
+                    : text.slice(selection.focusOffset, selection.anchorOffset + 1);
 
+                const tagSelections = [{
+                    element: selectedTag,
+                    content: selectedContent,
+                    contentFormat: ContentFormat.Selected
+                }] satisfies TagSelection[]
+
+                console.log(tagSelections)
+            }
+        }

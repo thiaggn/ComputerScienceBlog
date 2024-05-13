@@ -1,10 +1,28 @@
-import {PostState} from "../../pages/editor/types/texteditor/PostState.ts";
+import {PostState} from "../../pages/editor/types/editor_elements/state/PostState.ts";
 import {EditablePostDataPlaceholder} from "../placeholders/EditablePostDataPlaceholder.ts";
 import {v4 as v4uuid} from "uuid";
-import {BlockState} from "../../pages/editor/types/texteditor/BlockState.ts";
+import {BlockState, BlockType} from "../../pages/editor/types/editor_elements/state/BlockState.ts";
 import {TextEditorRole} from "../../pages/editor/types/TextEditorRole.ts";
-import {TagState} from "../../pages/editor/types/texteditor/TagState.ts";
-import {PostData} from "../../pages/editor/types/texteditor/PostData.ts";
+import {TagState} from "../../pages/editor/types/editor_elements/state/TagState.ts";
+import {BlockData} from "../../pages/editor/types/editor_elements/data/BlockData.ts";
+
+function parseTextBlock(block: BlockData<TagState>) {
+    const blockId = v4uuid();
+
+    const tags = block.contents.map(tag => ({
+        role: TextEditorRole.Tag,
+        id: v4uuid(),
+        content: tag.content,
+        type: tag.type,
+        parentBlockId: blockId
+    })) satisfies TagState[];
+
+    return {
+        id: v4uuid(),
+        type: block.type,
+        contents: tags
+    } satisfies BlockState<TagState>;
+}
 
 export class EditablePostProvider {
     public static async get(postId: string): Promise<Partial<PostState>> {
@@ -13,27 +31,24 @@ export class EditablePostProvider {
         const post = EditablePostDataPlaceholder;
 
         const blockStates = post.blocks.map(blockData => {
-            const tagStates = blockData.tags.map(tag => ({
-                role: TextEditorRole.Tag,
-                id: v4uuid(),
-                content: tag.content,
-                type: tag.type,
-                isInactive: false,
-            })) satisfies TagState[];
 
-            return {
-                role: TextEditorRole.Block,
-                id: blockData.id,
-                type: blockData.type,
-                tags: tagStates
-            };
+            switch (blockData.type) {
+                case BlockType.Text:
+                    return parseTextBlock(blockData);
 
-        }) satisfies BlockState[];
+                case BlockType.Table:
+                    return parseTextBlock(blockData);
 
-            return {
-                id: post.id,
-                title: post.title,
-                blocks: blockStates
-            } satisfies Partial<PostData>
-        }
+                case BlockType.Undefined:
+                    throw new Error("Block type can't be undefined");
+            }
+
+        }) satisfies BlockState<unknown>[];
+
+        return {
+            id: v4uuid(),
+            title: post.title,
+            blocks: blockStates
+        } satisfies PostState
     }
+}

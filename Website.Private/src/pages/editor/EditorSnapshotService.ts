@@ -1,15 +1,15 @@
 import {PostSnapshot} from "./types/PostSnapshot.ts";
-import {BlockState} from "./types/texteditor/BlockState.ts";
+import {BlockState} from "./types/editor_elements/state/BlockState.ts";
 
-export class SnapshotService {
+export class EditorSnapshotService {
     private static snapshots: PostSnapshot[] = [];
     private static current: number = 0;
     private static versions: number = 0;
 
-    private static throttledBlocks: BlockState[] | null;
+    private static throttledBlocks: BlockState<unknown>[] | null;
     private static timeout: number | null;
 
-    public static setSnapshot(blocks: BlockState[]) {
+    public static setSnapshot(blocks: BlockState<unknown>[]) {
         this.snapshots = [{blocks}];
 
     }
@@ -65,7 +65,7 @@ export class SnapshotService {
         }
     }
 
-    public static captureSnapshot(blocks: BlockState[]) {
+    public static captureSnapshot(blocks: BlockState<unknown>[]) {
         this.throttledBlocks = blocks;
 
         if (this.timeout != null) return;

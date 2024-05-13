@@ -1,4 +1,4 @@
-import {TextEditorRole} from "../TextEditorRole.ts";
+import {TextEditorRole} from "../../TextEditorRole.ts";
 export enum TagType {
     Text,
     Code,
@@ -8,5 +8,6 @@ export enum TagType {
 export interface TagState {
     id: string;
     type: TagType;
-    content: any;
+    content: string;
+    parentBlockId: string
 }

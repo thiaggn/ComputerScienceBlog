@@ -1,7 +1,7 @@
-import {CaretPositionRecord} from "./CaretPositionRecord.ts";
-import {BlockState} from "./texteditor/BlockState.ts";
+import {CaretRecord} from "./CaretRecord.ts";
+import {BlockState} from "./editor_elements/state/BlockState.ts";
 
 export interface PostSnapshot {
-    blocks: BlockState[],
-    caretPosition?: CaretPositionRecord
+    blocks: BlockState<unknown>[],
+    caretPosition?: CaretRecord
 }
