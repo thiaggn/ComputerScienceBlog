@@ -1,9 +1,9 @@
-import {TagState, TagType} from "../types/editor_elements/state/TagState.ts";
+import {TagState, TagType} from "../types/data/TagState.ts";
 import s from '../styles/TextEditor.module.scss';
 import {join} from "../../../lib/utils/join.ts";
 import useTextTag from "../hooks/useTextTag.ts";
 import {useRef} from "react";
-import {BlockState} from "../types/editor_elements/state/BlockState.ts";
+import {BlockState} from "../types/data/BlockState.ts";
 
 type Properties = {
     tagState: TagState
@@ -20,8 +20,8 @@ export default function Tag({tagState}: Properties) {
     const tagRef = useRef<HTMLDivElement>(null);
     useTextTag(tagState, tagRef);
 
-    return <div className={join(s.tag, styles[tagState.type])} editor-tag={tagState.type}>
-        <div className={s.editable} ref={tagRef} editor-editable="">
+    return <div className={join(s.tag, styles[tagState.type])} editor-tag={tagState.type} ref={tagRef}>
+        <div className={s.editable} editor-editable="">
             {tagState.content}
         </div>
     </div>

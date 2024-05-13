@@ -1,4 +1,4 @@
-export interface CaretRecord {
+export interface CaretSnapshot {
     node: Node,
     offset: number
 }

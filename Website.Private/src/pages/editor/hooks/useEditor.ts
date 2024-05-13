@@ -1,6 +1,5 @@
 import {RefObject, useEffect} from "react";
-import {usePostStore} from "../../../store/postStore.ts";
-import {BlockState} from "../types/editor_elements/state/BlockState.ts";
+import {BlockState} from "../types/data/BlockState.ts";
 
 export default function useEditor(ref: RefObject<HTMLDivElement>, blockStates: BlockState<unknown>[]) {
 

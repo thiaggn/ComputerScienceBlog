@@ -1,6 +1,6 @@
-import {BlockType} from "../../pages/editor/types/editor_elements/state/BlockState.ts";
-import {TagType} from "../../pages/editor/types/editor_elements/state/TagState.ts";
-import {PostData} from "../../pages/editor/types/editor_elements/data/PostData.ts";
+import {BlockType} from "../../pages/editor/types/data/BlockState.ts";
+import {TagType} from "../../pages/editor/types/data/TagState.ts";
+import {PostData} from "../../pages/editor/types/data/PostData.ts";
 
 
 export const EditablePostDataPlaceholder: PostData = {

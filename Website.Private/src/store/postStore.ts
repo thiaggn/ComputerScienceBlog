@@ -1,17 +1,20 @@
 import {create} from "zustand";
-import {PostState} from "../pages/editor/types/editor_elements/state/PostState.ts";
-import {BlockState, BlockType} from "../pages/editor/types/editor_elements/state/BlockState.ts";
-import {TagState} from "../pages/editor/types/editor_elements/state/TagState.ts";
-import {EditorSnapshotService} from "../pages/editor/EditorSnapshotService.ts";
+import {PostState} from "../pages/editor/types/data/PostState.ts";
+import {BlockState} from "../pages/editor/types/data/BlockState.ts";
+import {TagState} from "../pages/editor/types/data/TagState.ts";
+import {EditorSnapshotService} from "../pages/editor/hooks/EditorSnapshotService.ts";
 import {PostSnapshot} from "../pages/editor/types/PostSnapshot.ts";
+import {exclusiveMap} from "../utils/exclusiveMap.ts";
+import {TagData} from "../pages/editor/types/data/TagData.ts";
 
 
 type PostStore = PostState & {
     setPost: (post: Partial<PostState>) => void;
-    updateTextBlockTags: (targetBlockId: any, newTag: TagState) => void;
+    updateTextTagsInBlock: (targetBlockId: string, updatedTags: TagState[]) => void;
     removeTextBlockTags: (targetBlockId: any, targetTagIds: any[]) => void;
-    removeBlocks: (blockIds: any[]) => void;
+    removeBlocks: (blockIds: BlockState<unknown>[]) => void;
     goToSnapshot: (snapshot: PostSnapshot) => void;
+    joinBlocks: (firstBlockId: string, secondBlockId: string) => void;
 }
 
 export const usePostStore = create<PostStore>((set) => ({
@@ -20,7 +23,7 @@ export const usePostStore = create<PostStore>((set) => ({
     blocks: [],
 
     setPost: (post: Partial<PostState>) => set((state: PostState) => {
-        if(post.blocks != null) {
+        if (post.blocks != null) {
             EditorSnapshotService.setSnapshot(post.blocks);
         }
 
@@ -36,18 +39,58 @@ export const usePostStore = create<PostStore>((set) => ({
         }
     }),
 
-    updateTextBlockTags: (targetBlockId: string, newTag: TagState) => set((state: PostState) => {
-        const newBlocks = state.blocks.map((block: BlockState<unknown>) => {
-            if (block.id !== targetBlockId) return block;
 
-            const newTags = (block as BlockState<TagState>).contents.map(tag => {
-                if (tag.id != newTag.id) return tag;
-                else return newTag;
-            }) satisfies TagState[];
+    joinBlocks: (firstBlockId: string, secondBlockId: string) => set((state) => {
+        let firstBlock: BlockState<any> | undefined;
+        let secondBlock: BlockState<any> | undefined;
+
+        const newBlocks = exclusiveMap(state.blocks, (block, i) => {
+           if(block.id == secondBlockId) {
+               secondBlock = block;
+               return;
+           }
+
+           if(block.id == firstBlockId) firstBlock = {...block};
+           return block;
+        })
+
+        if(firstBlock && secondBlock) {
+            firstBlock.contents.push(...secondBlock.contents);
+        }
+
+        return {
+            ...state,
+            blocks: newBlocks
+        }
+    }),
+
+    updateTextTagsInBlock: (targetBlockId: string, updatedTags: TagState[]) => set((state: PostState) => {
+        const newBlocks = (state.blocks as BlockState<any>[]).map((block) => {
+            if (block.id !== targetBlockId) return block;
+            const newTags: TagState[] = [];
+
+            for(let j = 0, i = 0; j <= updatedTags.length && i < block.contents.length; i++) {
+
+                if(j == updatedTags.length) {
+                    newTags.push(...block.contents.slice(i));
+                    break;
+                }
+
+                const updatedTag = updatedTags[j];
+                const oldTag = block.contents[i];
+
+                if(updatedTag.id == oldTag.id) {
+                    if(updatedTag.content.length > 0) newTags.push(updatedTag);
+                    j++;
+                }
+
+                else newTags.push(oldTag);
+            }
+
 
             return {
                 ...block,
-                contents: newTags,
+                contents: newTags
             } as BlockState<TagState>
 
         }) satisfies BlockState<unknown>[];
@@ -61,15 +104,15 @@ export const usePostStore = create<PostStore>((set) => ({
 
     removeTextBlockTags: (targetBlockId: any, targetTagIds: any[]) => set((state: PostState) => {
         const newBlocks = state.blocks.map(block => {
-           if(block.id != targetBlockId) return block;
-           const newTags: TagState[] = (block as BlockState<TagState>)
-               .contents
-               .filter(tag => !targetTagIds.includes(tag.id));
+            if (block.id != targetBlockId) return block;
+            const newTags: TagState[] = (block as BlockState<TagState>)
+                .contents
+                .filter(tag => !targetTagIds.includes(tag.id));
 
-           return {
-               ...block,
-               tags: newTags
-           }
+            return {
+                ...block,
+                tags: newTags
+            }
         });
 
         EditorSnapshotService.captureSnapshot(newBlocks);
@@ -80,9 +123,12 @@ export const usePostStore = create<PostStore>((set) => ({
     }),
 
     removeBlocks: (removedBlocks: BlockState<unknown>[]) => set((state: PostState) => {
-       return {
-           blocks: state.blocks.filter(oldBlocks => !removedBlocks.includes(oldBlocks))
-       }
+        const newBlocks = state.blocks.filter(oldBlock => !removedBlocks.includes(oldBlock));
+        console.log(newBlocks);
+
+        return {
+            blocks: newBlocks
+        }
     }),
 
     insertTags: (targetBlockId: any, beforeTagId: string | null, tags: TagState[]) => set((state: PostState) => {

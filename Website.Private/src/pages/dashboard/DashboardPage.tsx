@@ -6,7 +6,6 @@ import {RecentCommentData} from "../../lib/Types.ts";
 import {RecentWorkDataPlaceholder} from "../../lib/placeholders/RecentWorkDataPlaceholder.ts";
 import {RecentCommentsDataPlaceholder} from "../../lib/placeholders/RecentCommentsDataPlaceholder.ts";
 import {getFormattedElapsedTime} from "../../lib/utils/getFormattedElapsedTime.ts";
-import {getGreeting} from "../../lib/utils/getGreeting.ts";
 
 export default function DashboardPage() {
 

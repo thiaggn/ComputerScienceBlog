@@ -1,4 +1,3 @@
-import {TextEditorRole} from "../../TextEditorRole.ts";
 export enum TagType {
     Text,
     Code,

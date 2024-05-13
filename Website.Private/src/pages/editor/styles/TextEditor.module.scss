@@ -1,29 +1,35 @@
 .textEditor {
-  width: 100%;
-  min-height: 300px;
+  width: 80%;
+  min-height: 90%;
   padding: 32px;
   border: 1px solid var(--b5);
-  font-family: Roboto, sans-serif;
-  text-align: justify;
+  font-family: 'Reddit Sans Condensed',Roboto, sans-serif;
   line-height: 3rem;
+  border-radius: 16px;
 
   &:focus {
     outline: none;
   }
 
   .block {
-    border-left: 3px solid rgb(223, 227, 222);
     padding-left: 8px;
     width: 100%;
+    transition: 200ms;
+
+    &:hover {
+      border-radius: 8px;
+      background: var(--b6);
+    }
+
 
     &:not(:first-of-type) {
-      margin-top: 16px;
+      margin-top: 2px;
     }
   }
 
   .tag > .editable {
-    font-size: 1.2rem;
-    font-weight: 500;
+    font-size: 16px;
+    font-weight: 400;
     display: inline;
   }
 
@@ -36,17 +42,14 @@
 
     &.bold {
       font-weight: bolder;
-      background: rgba(71, 178, 178, 0.25);
     }
 
     &.italic {
       font-style: italic;
-      background: rgba(178, 71, 169, 0.27);
     }
 
     &.code {
       font-family: "JetBrains Mono", sans-serif;
-      background: rgba(101, 178, 71, 0.28);
     }
   }
 }

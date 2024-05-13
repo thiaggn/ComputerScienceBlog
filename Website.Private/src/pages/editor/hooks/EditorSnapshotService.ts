@@ -1,5 +1,5 @@
-import {PostSnapshot} from "./types/PostSnapshot.ts";
-import {BlockState} from "./types/editor_elements/state/BlockState.ts";
+import {PostSnapshot} from "../types/PostSnapshot.ts";
+import {BlockState} from "../types/data/BlockState.ts";
 
 export class EditorSnapshotService {
     private static snapshots: PostSnapshot[] = [];

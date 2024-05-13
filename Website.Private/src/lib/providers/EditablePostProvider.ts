@@ -1,18 +1,19 @@
-import {PostState} from "../../pages/editor/types/editor_elements/state/PostState.ts";
-import {EditablePostDataPlaceholder} from "../placeholders/EditablePostDataPlaceholder.ts";
+import {PostState} from "../../pages/editor/types/data/PostState.ts";
 import {v4 as v4uuid} from "uuid";
-import {BlockState, BlockType} from "../../pages/editor/types/editor_elements/state/BlockState.ts";
-import {TextEditorRole} from "../../pages/editor/types/TextEditorRole.ts";
-import {TagState} from "../../pages/editor/types/editor_elements/state/TagState.ts";
-import {BlockData} from "../../pages/editor/types/editor_elements/data/BlockData.ts";
+import {BlockState, BlockType} from "../../pages/editor/types/data/BlockState.ts";
+import {TagState} from "../../pages/editor/types/data/TagState.ts";
+import {BlockData} from "../../pages/editor/types/data/BlockData.ts";
+import {EditablePostDataPlaceholder} from "../placeholders/EditablePostDataPlaceholder.ts";
 
 function parseTextBlock(block: BlockData<TagState>) {
     const blockId = v4uuid();
 
+    let lastTagIndex = block.contents.length - 1;
+    let currentIndex = 0;
+
     const tags = block.contents.map(tag => ({
-        role: TextEditorRole.Tag,
         id: v4uuid(),
-        content: tag.content,
+        content: (lastTagIndex != currentIndex++) ? tag.content : tag.content.trimEnd(),
         type: tag.type,
         parentBlockId: blockId
     })) satisfies TagState[];
@@ -37,7 +38,7 @@ export class EditablePostProvider {
                     return parseTextBlock(blockData);
 
                 case BlockType.Table:
-                    return parseTextBlock(blockData);
+                    throw new Error("Table block type parse is not implemented");
 
                 case BlockType.Undefined:
                     throw new Error("Block type can't be undefined");
