@@ -1,13 +1,9 @@
 import {RefObject, useEffect} from "react";
-import {BlockState} from "../types/data/BlockState.ts";
+import {BlockState} from "../types/state/BlockState.ts";
+import {EditorCaretHandler} from "../EditorCaretHandler.ts";
 
-export default function useEditor(ref: RefObject<HTMLDivElement>, blockStates: BlockState<unknown>[]) {
-
-
+export default function useEditor(ref: RefObject<HTMLDivElement>, blockStates: BlockState[]) {
     useEffect(() => {
-        const element = ref.current;
-        if (element) {
-
-        }
+        EditorCaretHandler.updateCaretPosition();
     });
 }

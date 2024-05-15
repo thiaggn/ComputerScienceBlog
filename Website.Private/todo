@@ -1,19 +1,21 @@
-else if(ancestral.parentElement instanceof Element) {
-            if(ancestral.parentElement.hasAttribute("editor-editable")) {
-                const selectedTag = ancestral.parentElement.closest("[editor-tag]");
-                if(!selectedTag) return;
-                const text = ancestral.parentElement.textContent || ""
+/**
+ *
+ *
+ *
+ *  FAZER COM QUE QUANDO DELETEAR BLOCOS INTEIROS, DEIXAR 1 VAZIO PRA COMEÇAR A ESCREVER D
+ *
 
-                const selectedContent = direction > 0
-                    ? text.slice(selection.anchorOffset, selection.focusOffset + 1)
-                    : text.slice(selection.focusOffset, selection.anchorOffset + 1);
+    QUANDO COLA E APAGA ALGO NO FIM DE UM BLOCO, DA ERRO
+        >> acho q é pq tá colando uma tag html nova.
 
-                const tagSelections = [{
-                    element: selectedTag,
-                    content: selectedContent,
-                    contentFormat: ContentFormat.Selected
-                }] satisfies TagSelection[]
+    COPIAR E COLAR, E DROP
 
-                console.log(tagSelections)
-            }
-        }
+    !!!!!!!!!!!!!!!!!!!! NAO PODE MUDAR OS OS ORIGINAIS POR CAUSA DO SNAPSHOT !!!!!!!!!!!!!!!!!!!!1
+    !!!!!!!!!!!!!!!!!!!! PARAR DE USAR PREV E NEXT PQ SENAO TEM QUE ATUALIZAR TODOS OS ELEMENTOS E
+    VAI CAUSAR RE-RENDERS!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! COLOCAR UMA PROPRIEDADE: ISLAST
+
+
+
+    PARAR DE USAR GENERICO PRA BLOCKSTATE E COMEÇAR A USAR TIPO, E DPS FAZER CASTING IGUAL
+    EU TO FAZENDO COM CARETRECORD
+ */

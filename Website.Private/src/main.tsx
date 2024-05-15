@@ -11,7 +11,7 @@ import SettingsPage from "./pages/settings/SettingsPage.tsx";
 import EditorPage from "./pages/editor/EditorPage.tsx";
 import {QueryClient, QueryClientProvider} from "@tanstack/react-query";
 import {ReactQueryDevtools} from "@tanstack/react-query-devtools";
-import {EditorInputListener} from "./pages/editor/hooks/EditorInputListener.ts";
+import {EditorDeletionHandler} from "./pages/editor/EditorDeletionHandler.ts";
 
 const appRouter = createBrowserRouter(
     createRoutesFromElements(
@@ -38,7 +38,7 @@ const appQueryClient = new QueryClient({
     }
 });
 
-EditorInputListener.addListener();
+EditorDeletionHandler.setListeners();
 
 ReactDOM.createRoot(document.getElementById('root')!).render(
     <React.StrictMode>

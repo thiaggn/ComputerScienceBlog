@@ -1,55 +1,65 @@
 .textEditor {
-  width: 80%;
+  width: 100%;
   min-height: 90%;
-  padding: 32px;
+  padding: 64px 128px;
   border: 1px solid var(--b5);
   font-family: 'Reddit Sans Condensed',Roboto, sans-serif;
-  line-height: 3rem;
-  border-radius: 16px;
+  border-radius: 8px;
+  background: var(--w);
 
   &:focus {
     outline: none;
   }
 
-  .block {
-    padding-left: 8px;
+  .textBlock {
+    text-align: justify;
+    padding-left: 4px;
     width: 100%;
     transition: 200ms;
 
+    * {
+      line-height: 2.2rem;
+      font-size: 1.5rem;
+    }
+
     &:hover {
       border-radius: 8px;
-      background: var(--b6);
+      background: var(--g0);
     }
-
 
     &:not(:first-of-type) {
-      margin-top: 2px;
-    }
-  }
-
-  .tag > .editable {
-    font-size: 16px;
-    font-weight: 400;
-    display: inline;
-  }
-
-  .tag {
-    display: inline;
-
-    &.text {
-
+      margin-top: 1.5rem;
     }
 
-    &.bold {
-      font-weight: bolder;
-    }
+    .tag {
+      display: inline;
 
-    &.italic {
-      font-style: italic;
-    }
+      &.code {
+        padding: 0 4px;
+        border-radius: 4px;
+        background: rgba(187, 235, 235, 0.48);
 
-    &.code {
-      font-family: "JetBrains Mono", sans-serif;
+        .editable {
+          white-space: nowrap;
+          font-size: 1.2rem !important;
+          font-weight: 600;
+          font-family: "JetBrains Mono", sans-serif;
+          color: steelblue;
+        }
+      }
+
+      .editable {
+        font-weight: 400;
+        display: inline;
+
+        &.bold {
+          font-weight: bolder;
+        }
+
+        &.italic {
+          font-style: italic;
+        }
+      }
     }
   }
 }

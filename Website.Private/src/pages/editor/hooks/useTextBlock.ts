@@ -1,10 +1,10 @@
-import {BlockState} from "../types/data/BlockState.ts";
+import {BlockState} from "../types/state/BlockState.ts";
 import {RefObject, useEffect} from "react";
-import {TagState} from "../types/data/TagState.ts";
+import {ContentState} from "../types/state/ContentState.ts";
 import useBlock from "./useBlock.ts";
 
 
-export default function useTextBlock(blockState: BlockState<TagState>, editableElement: RefObject<HTMLDivElement>) {
+export default function useTextBlock(blockState: BlockState, editableElement: RefObject<HTMLDivElement>) {
     useBlock(blockState, editableElement);
 
     useEffect(() => {

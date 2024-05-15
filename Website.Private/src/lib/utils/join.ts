@@ -1,3 +1,3 @@
-export function join(...args: (any)[]): string {
+export function join(...args: (string | undefined | null)[]): string {
     return args.join(" ");
 }
