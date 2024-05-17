@@ -1,11 +1,15 @@
-import { TagStyle, TagType, TextTagState} from "../../types/state/ContentState.ts";
+import { TagStyle} from "../../types/state/TagState.ts";
 import s from '../../styles/TextEditor.module.scss';
 import {join} from "../../../../lib/utils/join.ts";
+import {TextTagState} from "../../types/state/tag/TextTagState.ts";
+import {TextBlockState} from "../../types/state/block/TextBlockState.ts";
 import {useRef} from "react";
-import useTag from "../../hooks/useTag.ts";
+
+import {useTagEvents} from "../../hooks/useTagEvents.ts";
 
 type Properties = {
-    tagState: TextTagState
+    tagState: TextTagState,
+    parent: TextBlockState
 }
 
 const styles: Record<TagStyle, string> = {
@@ -14,14 +18,13 @@ const styles: Record<TagStyle, string> = {
     [TagStyle.Bold]: s.bold
 }
 
-
-export default function TextTag({tagState}: Properties) {
-    const tagRef = useRef<HTMLDivElement>(null);
-    useTag(tagState, tagRef);
+export default function TextTag({tagState, parent}: Properties) {
+    const ref = useRef<HTMLDivElement>(null);
+    useTagEvents(ref, tagState);
 
     const tagStyles: string[] = tagState.styles.map((s: TagStyle) => styles[s]);
 
-    return <div className={join(s.tag)} editor-tag={tagState.type} ref={tagRef} id={tagState.id}>
+    return <div ref={ref} id={tagState.id} className={join(s.tag)}  editor-tag={tagState.type}>
         <div className={join(s.editable, ...tagStyles)} editor-editable="">
             {tagState.content}
         </div>

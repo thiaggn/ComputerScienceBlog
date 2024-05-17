@@ -1,32 +1,22 @@
-import {CodeTagState, LinkTagState, ContentState, TextTagState} from "./ContentState.ts";
-
 export enum BlockType {
     Text,
     Table,
     Image,
-    Code
+    Code,
+    Math
 }
 
-export interface BlockState {
-    readonly type: BlockType;
-    readonly id: string;
-    readonly contents: ReadonlyArray<object>;
+export abstract class BlockState {
+    id: string;
+    abstract type: BlockType;
+    abstract contents: ReadonlyArray<object>;
+    next: BlockNeighbor;
+    prev: BlockNeighbor;
+    protected constructor(id: string) {
+        this.id =  id;
+    }
+
+    public abstract createCopy(mutator?: (tag: BlockState) => void): BlockState;
 }
 
-export interface TextBlockState extends BlockState {
-    readonly type: BlockType.Text;
-    readonly contents: ReadonlyArray<TextTagState | CodeTagState | LinkTagState>;
-}
-
-export interface TableBlockState extends BlockState {
-    readonly type: BlockType.Table;
-}
-
-export interface ImageBlockState extends BlockState {
-    readonly type: BlockType.Image;
-}
-
-export interface CodeBlockState extends BlockState {
-    readonly type: BlockType.Code;
-}
-
+export type BlockNeighbor = BlockState | undefined;

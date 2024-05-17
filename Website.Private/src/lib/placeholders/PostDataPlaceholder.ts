@@ -1,7 +1,8 @@
-import {BlockType, TextBlockState} from "../../pages/editor/types/state/BlockState.ts";
-import {TagBackground, TagColor, TagStyle, TagType, TextTagState} from "../../pages/editor/types/state/ContentState.ts";
-import {PostAPIData} from "../../pages/editor/types/state/DataState.ts";
-export const postDataPlaceholder: PostAPIData = [
+import {BlockType} from "../../pages/editor/types/state/BlockState.ts";
+import {TagBackground, TagColor, TagStyle, TagType} from "../../pages/editor/types/state/TagState.ts";
+import {TextBlockState} from "../../pages/editor/types/state/block/TextBlockState.ts";
+
+export const postDataPlaceholder = [
     {
         type: BlockType.Text,
         contents: [
