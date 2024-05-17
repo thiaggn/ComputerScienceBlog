@@ -8,7 +8,6 @@ export function useInputEvents(blocks: BlockState[]) {
     const inputHandler = new InputHandler();
 
     useEffect(() => {
-        console.log("Re-rendered", blocks);
        InputHandler.consumeNextSelection()
     }, [blocks]);
 

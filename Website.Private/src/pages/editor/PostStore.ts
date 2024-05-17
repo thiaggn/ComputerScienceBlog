@@ -1,23 +1,26 @@
 import {create} from "zustand";
 import {PostState} from "./types/state/PostState.ts";
 import {BlockState} from "./types/state/BlockState.ts";
-import {TagState, TagStyle} from "./types/state/TagState.ts";
+import {TagState} from "./types/state/TagState.ts";
 import {TextBlockState} from "./types/state/block/TextBlockState.ts";
+import {ContentState} from "./types/state/ContentState.ts";
 
 interface PostStoreState extends PostState {
     setBlocks(blocks: BlockState[]): void;
     updateTag(newTag: Readonly<TagState>): void;
     removeTags(startTag: Readonly<TagState>, endTag?: Readonly<TagState> | undefined, useSpaces?: boolean): void;
-    removeBlocks(startBlock: Readonly<BlockState>, endBlock?: Readonly<BlockState>): void
+    removeBlocks(startBlock: Readonly<BlockState>, endBlock?: Readonly<BlockState>): void;
+    mergeBlocks(targetBlockId: string, sourceBlockId: string): void;
 }
 
-function mergeSameTypeTags(block: Readonly<TextBlockState>, useSpaces = false) {
+function mergeSameTypeTags(block: Readonly<BlockState>, useSpaces = false) {
     return block.createCopy((newBlock: BlockState) => {
         const newTags: TagState[] = [];
 
-        for(let currentTag of block.contents) {
+        for(let i = 0; i < block.contents.length; i++) {
+            const currentTag = block.contents[i] as TagState;
             const previousIndex = newTags.length - 1;
-            const previousTag = newTags[previousIndex];
+            const previousTag = newTags[previousIndex] as TagState;
 
             if(previousTag && previousTag.type == currentTag.type) {
                 newTags[previousIndex] = previousTag.createCopy(newTag => {
@@ -37,6 +40,48 @@ function mergeSameTypeTags(block: Readonly<TextBlockState>, useSpaces = false) {
 export const usePostStore = create<PostStoreState>((set) => ({
     blocks: [],
     setBlocks: (blocks: BlockState[]) => set(state => ({blocks})),
+
+    mergeBlocks: (targetBlockId: string, sourceBlockId: string) => set(state => {
+
+        const newBlocks: BlockState[] = [];
+
+        let targetBlock: Readonly<BlockState> | undefined;
+        let sourceBlock: Readonly<BlockState> | undefined;
+        let targetBlockIndex: number | undefined;
+
+        for(let i = 0; i < state.blocks.length; i++) {
+            const currentBlock = state.blocks[i];
+            if(currentBlock.id == targetBlockId) {
+                targetBlockIndex = i;
+                targetBlock = currentBlock;
+            }
+            if(currentBlock.id == sourceBlockId) {
+                sourceBlock = currentBlock;
+                continue;
+            }
+            newBlocks.push(currentBlock);
+        }
+
+        if(targetBlock && sourceBlock && targetBlockIndex != undefined) {
+            const newBlock = (targetBlock.createCopy(newBlock => {
+                const newContentStates: ContentState[] = [...targetBlock.contents]
+
+                for(let contentState of sourceBlock.contents) {
+                    newContentStates.push(contentState.createCopy(newContentState => {
+                        const contentId = contentState.id.split("-")[1];
+                        newContentState.id = `${targetBlock.id}-${contentId}`;
+                    }))
+                }
+                newBlock.contents = newContentStates;
+            }));
+
+            newBlocks[targetBlockIndex] = mergeSameTypeTags(newBlock);
+        }
+
+        return {
+           blocks: newBlocks
+       }
+    }),
 
     removeBlocks: (startBlock: Readonly<BlockState>, endBlock?: Readonly<BlockState>) => set(state => {
         const newBlocks: BlockState[] = [];
@@ -62,7 +107,6 @@ export const usePostStore = create<PostStoreState>((set) => ({
     }),
 
     removeTags: (startTag: Readonly<TagState>, endTag?: Readonly<TagState> | undefined, useSpaces = false) => set(state => {
-        console.log("Requested tag deletion", startTag, endTag);
         const newBlocks: BlockState[] = [];
         const pathIds = startTag.id.split("-");
 
@@ -72,17 +116,17 @@ export const usePostStore = create<PostStoreState>((set) => ({
                     if(!endTag) endTag = startTag;
                     const newTags: TagState[] = [];
 
+                    let stopPushing: boolean = false;
                     for(let i = 0; i < oldBlock.contents.length; i++) {
-                        let stopPushing: boolean = false;
                         let currentTag = (oldBlock as TextBlockState).contents[i];
-
-                        if(currentTag.id == startTag.id) {
-                            stopPushing = true; // Excluir a partir daqui
-                        }
 
                         if(currentTag.id == endTag.id) {
                             stopPushing = false; // Parar de excluir depois daqui
                             continue;
+                        }
+
+                        else if(currentTag.id == startTag.id) {
+                            stopPushing = true; // Excluir a partir daqui
                         }
 
                         if(!stopPushing) newTags.push(currentTag);
@@ -105,7 +149,6 @@ export const usePostStore = create<PostStoreState>((set) => ({
     }),
 
     updateTag: (newTag: Readonly<TagState>) => set(state => {
-        console.log("Requested tag update", newTag);
         const pathIds = newTag.id.split('-');
         const newBlocks: BlockState[] = [];
 

@@ -53,6 +53,7 @@ export class InputHandler {
         usePostStore.getState().updateTag(newTag);
     }
 
+
     public handleCaretBackspace(input: InputDetails<KeyboardEvent>) {
         const startPoint = input.selection.start;
         const isTextTag = startPoint.tag.type == TagType.Text;
@@ -124,11 +125,11 @@ export class InputHandler {
 
             if (!startPointWasDeleted) usePostStore.getState().updateTag(
                 startPoint.tag.createCopy(newTag => {newTag.content = startPoint.unselectedText;}
-            ));
+                ));
 
             if (!endPointWasDeleted) usePostStore.getState().updateTag(
                 endPoint.tag.createCopy(newTag => {newTag.content = endPoint.unselectedText;}
-            ));
+                ));
 
             const removalStart = startPointWasDeleted ? startPoint.tag : tagAfterStart;
             const removalEnd = endPointWasDeleted ? endPoint.tag : tagBeforeEnd;
@@ -139,10 +140,44 @@ export class InputHandler {
         }
 
         else {
-            const afterStartPoint = startPoint.block.next as BlockState | undefined;
-            const beforeEndPoint = endPoint.block.prev as BlockState | undefined;
+            // Bloco do início
+            const startBlock = startPoint.block;
+            const startTagWasDeleted = startPoint.unselectedText.length == 0;
 
-            if(afterStartPoint) usePostStore.getState().removeBlocks(afterStartPoint, beforeEndPoint);
+            if (!startTagWasDeleted) usePostStore.getState().updateTag(
+                startPoint.tag.createCopy(newTag => {
+                    newTag.content = startPoint.unselectedText
+                }));
+
+            const s_removalStart = startTagWasDeleted ? startPoint.tag : startPoint.tag.next as TagState | undefined;
+            const s_removalEnd = startBlock.contents[startBlock.contents.length - 1] as TagState;
+            if (s_removalStart) usePostStore.getState().removeTags(s_removalStart, s_removalEnd);
+
+            // Bloco do final
+            const endBlock = endPoint.block;
+            const endTagWasDeleted = endPoint.unselectedText.length == 0;
+
+            if (!endTagWasDeleted) usePostStore.getState().updateTag(
+                endPoint.tag.createCopy(newTag => {
+                    newTag.content = endPoint.unselectedText;
+                })
+            )
+
+            const e_removalStart = endBlock.contents[0] as TagState;
+            const e_removalEnd = endTagWasDeleted ? endPoint.tag : endPoint.tag.prev as TagState | undefined;
+            if(e_removalStart != endPoint.tag) {
+                usePostStore.getState().removeTags(e_removalStart, e_removalEnd);
+            }
+
+            // Blocos do meio
+            const b_removalStart = startBlock.next;
+            const b_removalEnd = endBlock.prev;
+
+            if(b_removalEnd != startBlock && b_removalStart) {
+                usePostStore.getState().removeBlocks(b_removalStart, b_removalEnd);
+            }
+
+            usePostStore.getState().mergeBlocks(startBlock.id, endBlock.id);
 
             input.event.preventDefault()
         }

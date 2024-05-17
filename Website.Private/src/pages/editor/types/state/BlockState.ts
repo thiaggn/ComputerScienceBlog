@@ -1,3 +1,5 @@
+import {ContentState} from "./ContentState.ts";
+
 export enum BlockType {
     Text,
     Table,
@@ -9,7 +11,7 @@ export enum BlockType {
 export abstract class BlockState {
     id: string;
     abstract type: BlockType;
-    abstract contents: ReadonlyArray<object>;
+    abstract contents: ReadonlyArray<ContentState>;
     next: BlockNeighbor;
     prev: BlockNeighbor;
     protected constructor(id: string) {

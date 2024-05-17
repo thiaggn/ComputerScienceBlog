@@ -6,6 +6,8 @@ export abstract class ContentState {
     protected constructor(id: string) {
         this.id = id;
     }
+
+    public abstract createCopy(mutator?: (tag: ContentState) => void): ContentState;
 }
 
 
